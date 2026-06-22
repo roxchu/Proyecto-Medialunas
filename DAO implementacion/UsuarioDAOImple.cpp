@@ -1,0 +1,1 @@
+//lo que declare en la .h desarrollada con los queries
