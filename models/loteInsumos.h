@@ -30,7 +30,7 @@ class loteInsumos{
     void setIdLoteProduccion(int idLoteProduccion);
     void setIdInsumo (int idInsumo);
     void setCantidad(float cantidad);
-    void setUnidadMEdia(string unidadMedia);
+    void setUnidadMedia(string unidadMedia);
     void setObservaciones( string observaciones);
     void setCostoUnitario(float costoUnitario);
 

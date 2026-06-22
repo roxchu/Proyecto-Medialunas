@@ -2,9 +2,9 @@
 #define hojaRutaDAOImpl_H
 #include "hojaRutaDAO.h"
 
-class hojaRutaDAO : public hojaRutaDAO{ 
+class hojaRutaDAOImpl : public hojaRutaDAO{ 
 public:
- hojaRutaDAO();
+ hojaRutaDAOImpl();
  void insertar (hojaRuta obj);
  void actualizar (hojaRuta obj);
  void eliminar (hojaRuta obj);

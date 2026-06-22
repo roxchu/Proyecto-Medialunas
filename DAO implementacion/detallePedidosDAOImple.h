@@ -2,7 +2,7 @@
 #define detallePedidosDAOImple_H
 #include "detallePedidosDAO.h"
 
-class DetallesPedidosDAOImpl : public DetallesPedidosDAOImpl {
+class DetallesPedidosDAOImpl : public DetallesPedidosDAO{
 public: 
  DetallesPedidosDAOImpl();
  void insertar (DetallesPedidos obj);
