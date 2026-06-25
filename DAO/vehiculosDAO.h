@@ -1,9 +1,11 @@
 #ifndef vehiculosDAO_H
 #define vehiculosDAO_H
 #include "DAO.h"
-#include "vehiculos.h"
+#include "../models/vehiculos.h"
 
 class VehiculosDAO : public DAO <Vehiculos>{
+    public: 
+    VehiculosDAO();
 
 };
 

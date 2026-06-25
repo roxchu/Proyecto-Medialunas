@@ -1,6 +1,6 @@
 #ifndef variedadDAOImpl_H
 #define variedadDAOImpl_H
-#include "variedadDAO.h"
+#include "../DAO/variedadDAO.h"
 
 class variedadDAOImpl : public variedadDAO{ 
 public:

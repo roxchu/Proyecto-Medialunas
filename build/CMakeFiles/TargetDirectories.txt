@@ -1,0 +1,3 @@
+/home/rochi/Escritorio/Proyecto Medialunas-Pro/build/CMakeFiles/MedialunasPro.dir
+/home/rochi/Escritorio/Proyecto Medialunas-Pro/build/CMakeFiles/edit_cache.dir
+/home/rochi/Escritorio/Proyecto Medialunas-Pro/build/CMakeFiles/rebuild_cache.dir

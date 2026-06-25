@@ -1,6 +1,6 @@
 #ifndef stockVentaDAOImpl_H
 #define stockVentaDAOImpl_H
-#include "stockVentaDAO.h"
+#include "../DAO/stockVentaDAO.h"
 
 class stockVentaDAOImpl : public StockVentaDAO{ 
 public:

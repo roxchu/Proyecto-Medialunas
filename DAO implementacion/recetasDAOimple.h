@@ -1,6 +1,6 @@
 #ifndef recetasDAOImpl_H
 #define recetasDAOImpl_H
-#include "recetasDAO.h"
+#include "../DAO/recetasDAO.h"
 
 class recetasDAOImpl : public RecetaDAO{
 public:

@@ -1,6 +1,6 @@
 #ifndef hojaRutaDAOImpl_H
 #define hojaRutaDAOImpl_H
-#include "hojaRutaDAO.h"
+#include "../DAO/hojaRutaDAO.h"
 
 class hojaRutaDAOImpl : public hojaRutaDAO{ 
 public:

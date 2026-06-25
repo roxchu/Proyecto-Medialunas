@@ -1,6 +1,6 @@
 #ifndef lotesProduccionDAOImpl_H
 #define lotesProduccionDAOImpl_H
-#include "lotesProduccionDAO.h"
+#include "../DAO/lotesProduccionDAO.h"
 
 class lotesProduccionDAOImpl : public LotesProduccionDAO{
 public:

@@ -1,6 +1,6 @@
 #ifndef clienteDAOImpl_H
 #define clienteDAOImpl_H
-#include "clienteDAO.h"
+#include "../DAO/clienteDAO.h"
 
 class ClienteDAOImpl : public ClienteDAO {
 public:

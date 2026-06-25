@@ -1,3 +1,4 @@
 #include "categoriaUsuarioDAO.h"
 
-categoriaUsuarioDAO::categoriaUsuarioDAO() {}
+categoriaUsuarioDAO::categoriaUsuarioDAO() {
+}

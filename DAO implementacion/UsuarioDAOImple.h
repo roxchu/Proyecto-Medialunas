@@ -1,6 +1,6 @@
 #ifndef UsuarioDAOImpl_H
 #define UsuarioDAOImpl_H
-#include "UsuarioDAO.h"
+#include "../DAO/UsuarioDAO.h"
 
 class UsuarioDAOImpl : public UsuarioDAO{
 public:

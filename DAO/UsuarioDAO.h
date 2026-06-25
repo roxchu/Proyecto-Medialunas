@@ -2,9 +2,11 @@
 #ifndef UsuarioDAO_H
 #define UsuarioDAO_H
 #include "DAO.h"
-#include "usuario.h"
+#include "../models/usuario.h"
 
 class UsuarioDAO : public DAO <Usuario>{
+    public:
+    UsuarioDAO();
 
 };
 

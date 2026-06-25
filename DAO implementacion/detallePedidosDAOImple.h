@@ -1,6 +1,6 @@
 #ifndef detallePedidosDAOImple_H
 #define detallePedidosDAOImple_H
-#include "detallePedidosDAO.h"
+#include "../DAO/detallePedidosDAO.h"
 
 class DetallesPedidosDAOImpl : public DetallesPedidosDAO{
 public: 

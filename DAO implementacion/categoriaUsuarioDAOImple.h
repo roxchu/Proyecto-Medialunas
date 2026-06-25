@@ -1,6 +1,6 @@
 #ifndef categoriaUsuarioDAOImpl_H
 #define categoriaUsuarioDAOImpl_H
-#include "categoriaUsuarioDAO.h"
+#include "../DAO/categoriaUsuarioDAO.h"
 
 class categoriaUsuarioDAOImpl : public categoriaUsuarioDAO{
 public:

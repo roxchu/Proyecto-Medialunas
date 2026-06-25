@@ -1,6 +1,6 @@
 #ifndef insumosDAOImpl_H
 #define insumosDAOImpl_H
-#include "insumosDAO.h"
+#include "../DAO/insumosDAO.h"
 
 class InsumosDAOImpl : public InsumosDAO{
 public:

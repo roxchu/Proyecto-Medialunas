@@ -1,6 +1,6 @@
 #ifndef loteInsumosDAOImpl_H
 #define loteInsumosDAOImpl_H
-#include "loteInsumosDAO.h"
+#include "../DAO/loteInsumosDAO.h"
 
 class loteInsumosDAOImpl : public loteInsumosDAO{
 public:

@@ -1,6 +1,6 @@
 #ifndef pedidosDAOImpl_H
 #define pedidosDAOImpl_H
-#include "pedidosDAO.h"
+#include "../DAO/pedidosDAO.h"
 
 class PedidosDAOImpl : public PedidosDAO{
 public:

@@ -1,6 +1,6 @@
 #ifndef vehiculosDAOImpl_H
 #define vehiculosDAOImpl_H
-#include "vehiculosDAO.h"
+#include "../DAO/vehiculosDAO.h"
 
 class VehiculosDAOImpl : public VehiculosDAO {
 public:
