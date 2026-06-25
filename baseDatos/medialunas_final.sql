@@ -18,7 +18,8 @@ CREATE TABLE IF NOT EXISTS insumos (
     nombre TEXT NOT NULL,
     cantidadActual REAL,
     unidadMedida TEXT,
-    proveedor TEXT
+    proveedor TEXT,
+    stockMinimo REAL DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS vehiculos (
@@ -47,6 +48,7 @@ CREATE TABLE IF NOT EXISTS usuario (
     contactoEmergencia TEXT,
     nombreCE TEXT,
     idCategoria INTEGER,
+    sector TEXT DEFAULT 'Ventas',
     FOREIGN KEY (idCategoria) REFERENCES categoriaUsuario(id)
 );
 
@@ -109,7 +111,17 @@ CREATE TABLE IF NOT EXISTS loteInsumos (
     unidadMedida TEXT,
     observaciones TEXT,
     costoUnitario REAL,
+    stockMinimo REAL DEFAULT 0,
     FOREIGN KEY (idLoteProduccion) REFERENCES lotesProduccion(id),
+    FOREIGN KEY (idInsumo) REFERENCES insumos(id)
+);
+
+CREATE TABLE IF NOT EXISTS recetaInsumos (
+    idReceta INTEGER,
+    idInsumo INTEGER,
+    cantidad REAL,
+    PRIMARY KEY (idReceta, idInsumo),
+    FOREIGN KEY (idReceta) REFERENCES receta(id),
     FOREIGN KEY (idInsumo) REFERENCES insumos(id)
 );
 
@@ -122,3 +134,17 @@ CREATE TABLE IF NOT EXISTS detallePedido (
     FOREIGN KEY (idPedido) REFERENCES pedidos(id),
     FOREIGN KEY (idVariedad) REFERENCES variedad(id)
 );
+
+CREATE VIEW IF NOT EXISTS facturacionWeb AS
+SELECT
+    c.direccion AS direccion,
+    p.id AS idPedido,
+    p.idCliente AS idCliente,
+    p.fechaPedido AS fecha,
+    d.idVariedad AS idVariedad,
+    d.cantidad AS cantidad,
+    d.precioUnitario AS precio,
+    c.metodoPago AS metodoPago
+FROM pedidos p
+LEFT JOIN clientes c ON c.id = p.idCliente
+LEFT JOIN detallePedido d ON d.idPedido = p.id;

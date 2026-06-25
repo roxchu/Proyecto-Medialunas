@@ -160,4 +160,8 @@ CMakeFiles/MedialunasPro.dir/baseDatos/conexion.cpp.o: \
  /usr/include/c++/14/bits/locale_facets.tcc \
  /usr/include/c++/14/bits/basic_ios.tcc \
  /usr/include/c++/14/bits/ostream.tcc /usr/include/c++/14/istream \
- /usr/include/c++/14/bits/istream.tcc /usr/include/sqlite3.h
+ /usr/include/c++/14/bits/istream.tcc /usr/include/sqlite3.h \
+ /usr/include/c++/14/fstream /usr/include/c++/14/bits/codecvt.h \
+ /usr/include/x86_64-linux-gnu/c++/14/bits/basic_file.h \
+ /usr/include/x86_64-linux-gnu/c++/14/bits/c++io.h \
+ /usr/include/c++/14/bits/fstream.tcc
