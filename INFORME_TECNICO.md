@@ -13,7 +13,7 @@ La aplicacion de escritorio se usa dentro de la empresa para administrar usuario
 
 ### Sistema base
 
-Se necesita una distribucion Linux con herramientas de compilacion C++ y SQLite.
+Se necesita una distribucion Linux con herramientas de compilacion C++, SQLite y Python 3 para la web local.
 
 Paquetes recomendados en Debian, Ubuntu o Linux Mint:
 
@@ -22,7 +22,14 @@ sudo apt update
 sudo apt install build-essential cmake sqlite3 libsqlite3-dev python3
 ```
 
-Para compilar la app de escritorio tambien se necesita Raylib. Si Raylib ya esta instalado con soporte CMake, el proyecto compila con:
+Para compilar y ejecutar la app de escritorio tambien se necesita Raylib y un entorno grafico disponible. Si Raylib ya esta instalado con soporte CMake, el proyecto compila con:
+
+```bash
+cmake -S . -B build
+cmake --build build
+```
+
+Si ya existe la carpeta `build/`, se puede recompilar solo con:
 
 ```bash
 cmake --build build
@@ -52,6 +59,12 @@ baseDatos/medialunas.db
 
 Se corrigio la conexion para que, aunque se ejecute desde la raiz o desde `build/`, busque la base correcta en `baseDatos/medialunas.db`.
 
+Si Linux no permite ejecutar el binario, dar permiso de ejecucion:
+
+```bash
+chmod +x build/MedialunasPro
+```
+
 ### Ejecutar la web local de prueba
 
 La version Python no necesita dependencias externas:
@@ -71,6 +84,12 @@ Esta web local lee y escribe la misma base SQLite que la aplicacion de escritori
 ```text
 baseDatos/medialunas.db
 ```
+
+Flujo de uso:
+
+- Crear el pedido desde `http://127.0.0.1:8080/`.
+- Guardar el ID mostrado al confirmar el pedido.
+- Consultar estado, detalle y facturacion desde `http://127.0.0.1:8080/consulta` o desde el formulario de consulta de la portada.
 
 ### Ejecutar la version PHP
 
@@ -124,9 +143,22 @@ Roles usados:
 
 ### 1. Cierre de sesion
 
-En la aplicacion de escritorio el boton ahora dice `Cerrar sesion`. Antes decia `Salir`, lo que podia confundirse con cerrar el programa. Al presionarlo vuelve a la pantalla inicial y limpia los datos de la sesion.
+En la aplicacion de escritorio el boton ahora dice `Cerrar sesion`. Antes decia `Salir`, lo que podia confundirse con cerrar el programa. Al presionarlo vuelve a la pantalla inicial.
 
-Justificacion: el usuario necesita entender claramente que abandona su sesion, no necesariamente la aplicacion.
+Ademas, el cierre de sesion ahora limpia:
+
+- DNI del usuario.
+- Rol/categoria.
+- Nombre.
+- Sector.
+- Usuario y contrasena escritos en el login.
+- Tabla seleccionada.
+- Filas cargadas.
+- Formulario activo.
+- Registro seleccionado.
+- Scroll de tabla y menu.
+
+Justificacion: el usuario necesita entender claramente que abandona su sesion, no necesariamente la aplicacion. Tambien evita que, al salir, quede informacion del usuario anterior visible o seleccionada dentro del sistema.
 
 ### 2. Permisos por rol y sector
 
@@ -177,7 +209,9 @@ Tambien se agrego un formulario de consulta en la portada. El cliente ingresa su
 - Precio por docena.
 - Total.
 
-Justificacion: el cliente necesita poder revisar su pedido sin llamar a la empresa.
+Tambien se agrego validacion para IDs invalidos y un formulario dentro de la vista de factura para consultar otro pedido sin volver manualmente a la portada.
+
+Justificacion: el cliente necesita poder revisar su pedido sin llamar a la empresa. El ID funciona como comprobante simple: se entrega al crear el pedido y despues permite recuperar estado, detalle y facturacion.
 
 ### 5. Cantidades por docena
 
@@ -257,6 +291,44 @@ web/server.py
 ```
 
 Sirve para probar rapido sin instalar frameworks. Usa `http.server`, `sqlite3` y HTML/CSS embebido.
+
+Justificacion: permite demostrar el flujo web completo en Linux con Python 3, sin instalar Flask, Django ni dependencias externas.
+
+### 12. Web PHP opcional
+
+Se agrego una version PHP equivalente en:
+
+```text
+web_php/
+```
+
+Incluye:
+
+- Alta de pedidos.
+- Consulta por ID.
+- Vista de factura.
+- Validacion de ID invalido.
+- Enlaces para ver el pedido creado y consultar otro pedido.
+
+Justificacion: deja una alternativa mas cercana a un hosting tradicional PHP, manteniendo la misma base SQLite del sistema.
+
+## Resumen funcional actual
+
+- La empresa administra datos desde la app C++ de escritorio.
+- Los clientes mayoristas cargan pedidos desde la web.
+- Al crear un pedido, la web informa el ID de pedido.
+- Con ese ID, el cliente consulta estado, detalle y facturacion.
+- El precio no lo escribe el cliente: se toma desde `stockVenta`.
+- La cantidad comercial usada en web es docenas.
+- La sesion interna puede cerrarse desde la app de escritorio con limpieza de estado.
+
+## Archivos principales modificados
+
+- `InterfazGrafica.cpp`: login, cierre de sesion, permisos, paneles internos y vistas de datos.
+- `web/server.py`: web local Python para pedidos, consulta y factura.
+- `web_php/`: version PHP opcional de la web.
+- `baseDatos/medialunas.db`: base SQLite usada por la app y la web.
+- `INFORME_TECNICO.md`: documentacion de requisitos, ejecucion e implementaciones.
 
 Justificacion: permite validar el flujo web de pedidos sin depender todavia de hosting, Apache, Nginx o PHP.
 

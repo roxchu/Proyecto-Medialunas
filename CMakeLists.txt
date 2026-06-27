@@ -34,9 +34,10 @@ target_include_directories(MedialunasPro PRIVATE
 )
 
 find_package(raylib CONFIG REQUIRED)
-find_package(SQLite3 REQUIRED)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(MARIADB REQUIRED IMPORTED_TARGET libmariadb)
 
-target_link_libraries(MedialunasPro PRIVATE raylib SQLite::SQLite3)
+target_link_libraries(MedialunasPro PRIVATE raylib PkgConfig::MARIADB)
 
 add_custom_command(TARGET MedialunasPro POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory

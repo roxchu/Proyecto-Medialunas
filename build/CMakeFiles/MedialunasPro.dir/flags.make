@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -DUSE_LIBTYPE_SHARED
 
-CXX_INCLUDES = -I"/home/rochi/Escritorio/Proyecto Medialunas-Pro" -I"/home/rochi/Escritorio/Proyecto Medialunas-Pro/baseDatos" -I"/home/rochi/Escritorio/Proyecto Medialunas-Pro/DAO" -I"/home/rochi/Escritorio/Proyecto Medialunas-Pro/DAO implementacion" -I"/home/rochi/Escritorio/Proyecto Medialunas-Pro/models"
+CXX_INCLUDES = -I"/home/rochi/Escritorio/Proyecto Medialunas-Pro" -I"/home/rochi/Escritorio/Proyecto Medialunas-Pro/baseDatos" -I"/home/rochi/Escritorio/Proyecto Medialunas-Pro/DAO" -I"/home/rochi/Escritorio/Proyecto Medialunas-Pro/DAO implementacion" -I"/home/rochi/Escritorio/Proyecto Medialunas-Pro/models" -isystem /usr/include/mariadb
 
 CXX_FLAGS = -std=gnu++17
 

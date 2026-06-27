@@ -405,7 +405,7 @@ private:
         filas.clear();
         Conexion con("medialunas.db");
         if (!con.conectar()) {
-            mensaje = "No se pudo abrir la base de datos";
+            mensaje = "No se pudo conectar a la base remota";
             return;
         }
 
@@ -505,7 +505,10 @@ private:
 
     void insertarRegistro() {
         Conexion con("medialunas.db");
-        if (!con.conectar()) return;
+        if (!con.conectar()) {
+            mensaje = "No se pudo conectar a la base remota";
+            return;
+        }
         const ConfigTabla& config = tablas[tablaActual];
         vector<int> indices;
         for (int i = 0; i < (int)config.campos.size(); i++) {
@@ -542,7 +545,10 @@ private:
 
     void actualizarRegistro() {
         Conexion con("medialunas.db");
-        if (!con.conectar()) return;
+        if (!con.conectar()) {
+            mensaje = "No se pudo conectar a la base remota";
+            return;
+        }
         const ConfigTabla& config = tablas[tablaActual];
         vector<int> editables;
         vector<int> claves;
@@ -583,7 +589,10 @@ private:
         }
 
         Conexion con("medialunas.db");
-        if (!con.conectar()) return;
+        if (!con.conectar()) {
+            mensaje = "No se pudo conectar a la base remota";
+            return;
+        }
         const ConfigTabla& config = tablas[tablaActual];
         string sql = "DELETE FROM " + config.tabla + " WHERE " + condicionClaves(config);
 
@@ -622,7 +631,10 @@ private:
 
     void iniciarSesion() {
         Conexion con("medialunas.db");
-        if (!con.conectar()) return;
+        if (!con.conectar()) {
+            mensaje = "No se pudo conectar a la base remota";
+            return;
+        }
         string sql = "SELECT DNI, nombre, idCategoria, sector FROM usuario WHERE cuenta=? AND clave=?";
         sqlite3_stmt* stmt = nullptr;
         bool ok = false;
@@ -659,7 +671,10 @@ private:
         }
 
         Conexion con("medialunas.db");
-        if (!con.conectar()) return;
+        if (!con.conectar()) {
+            mensaje = "No se pudo conectar a la base remota";
+            return;
+        }
         string sql = "INSERT INTO usuario (DNI, nombre, apellido, direccion, telefono, email, contactoEmergencia, nombreCE, idCategoria, sector, cuenta, clave) VALUES (?, ?, ?, '', ?, ?, '', '', 3, 'Ventas', ?, ?)";
         sqlite3_stmt* stmt = nullptr;
         if (sqlite3_prepare_v2(con.getDB(), sql.c_str(), -1, &stmt, NULL) == SQLITE_OK) {
@@ -705,38 +720,30 @@ private:
         usuarioCategoria = 0;
         usuarioNombre = "";
         usuarioSector = "";
-        mensaje = "Sesion cerrada";
+        tablaActual = 0;
+        filas.clear();
+        formulario.clear();
+        claveSeleccionada.clear();
+        scrollTabla = 0;
+        scrollMenu = 0;
+        loginCuenta.limpiar();
         loginClave.limpiar();
+        mensaje = "Sesion cerrada";
     }
 
     void inicializarBase() {
         Conexion con("medialunas.db");
-        if (!con.conectar()) return;
+        if (!con.conectar()) {
+            mensaje = "No se pudo conectar a la base remota";
+            return;
+        }
         ejecutarSqlArchivo(con.getDB());
-        sqlite3_exec(con.getDB(), "ALTER TABLE usuario ADD COLUMN cuenta TEXT", NULL, NULL, NULL);
-        sqlite3_exec(con.getDB(), "ALTER TABLE usuario ADD COLUMN clave TEXT", NULL, NULL, NULL);
-        sqlite3_exec(con.getDB(), "ALTER TABLE usuario ADD COLUMN sector TEXT DEFAULT 'Ventas'", NULL, NULL, NULL);
-        sqlite3_exec(con.getDB(), "ALTER TABLE insumos ADD COLUMN stockMinimo REAL DEFAULT 0", NULL, NULL, NULL);
-        sqlite3_exec(con.getDB(), "ALTER TABLE loteInsumos ADD COLUMN stockMinimo REAL DEFAULT 0", NULL, NULL, NULL);
-        sqlite3_exec(con.getDB(), "CREATE TABLE IF NOT EXISTS recetaInsumos (idReceta INTEGER, idInsumo INTEGER, cantidad REAL, PRIMARY KEY (idReceta, idInsumo), FOREIGN KEY (idReceta) REFERENCES receta(id), FOREIGN KEY (idInsumo) REFERENCES insumos(id))", NULL, NULL, NULL);
-        sqlite3_exec(con.getDB(), "CREATE VIEW IF NOT EXISTS facturacionWeb AS SELECT c.direccion AS direccion, p.id AS idPedido, p.idCliente AS idCliente, p.fechaPedido AS fecha, d.idVariedad AS idVariedad, d.cantidad AS cantidad, d.precioUnitario AS precio, c.metodoPago AS metodoPago FROM pedidos p LEFT JOIN clientes c ON c.id = p.idCliente LEFT JOIN detallePedido d ON d.idPedido = p.id", NULL, NULL, NULL);
         sqlite3_exec(con.getDB(), "DELETE FROM detallePedido WHERE NOT EXISTS (SELECT 1 FROM pedidos WHERE pedidos.id = detallePedido.idPedido)", NULL, NULL, NULL);
-        sqlite3_exec(con.getDB(), "CREATE UNIQUE INDEX IF NOT EXISTS idx_usuario_cuenta ON usuario(cuenta)", NULL, NULL, NULL);
-        sqlite3_exec(con.getDB(), "INSERT OR IGNORE INTO categoriaUsuario (id, nombreCategoria) VALUES (1, 'Duenio'), (2, 'Admin'), (3, 'Empleado'), (4, 'Cliente')", NULL, NULL, NULL);
-        sqlite3_exec(con.getDB(), "INSERT OR IGNORE INTO usuario (DNI, nombre, apellido, direccion, telefono, email, contactoEmergencia, nombreCE, idCategoria, sector, cuenta, clave) VALUES (1, 'Admin', 'General', '', '', 'admin@medialunas.local', '', '', 2, 'Admin', 'admin', '1234')", NULL, NULL, NULL);
-        sqlite3_exec(con.getDB(), "UPDATE usuario SET cuenta='admin', clave='1234', idCategoria=2, sector='Admin' WHERE DNI=1 AND (cuenta IS NULL OR cuenta='')", NULL, NULL, NULL);
-        sqlite3_exec(con.getDB(), "UPDATE usuario SET sector='Admin' WHERE cuenta='admin'", NULL, NULL, NULL);
-        sqlite3_exec(con.getDB(), "INSERT OR IGNORE INTO usuario (DNI, nombre, apellido, direccion, telefono, email, contactoEmergencia, nombreCE, idCategoria, sector, cuenta, clave) VALUES "
-                              "(100, 'Duenio', 'Prueba', '', '', 'duenio@medialunas.local', '', '', 1, 'Admin', 'duenio', '1234'), "
-                              "(101, 'Admin', 'Prueba', '', '', 'admin2@medialunas.local', '', '', 2, 'Admin', 'admin2', '1234'), "
-                              "(201, 'Ventas', 'Prueba', '', '', 'ventas@medialunas.local', '', '', 3, 'Ventas', 'ventas', '1234'), "
-                              "(202, 'Produccion', 'Prueba', '', '', 'produccion@medialunas.local', '', '', 3, 'Produccion', 'produccion', '1234'), "
-                              "(203, 'Logistica', 'Prueba', '', '', 'logistica@medialunas.local', '', '', 3, 'Logistica', 'logistica', '1234')", NULL, NULL, NULL);
         con.cerrar();
     }
 
     void ejecutarSqlArchivo(sqlite3* db) {
-        vector<string> rutas = {"baseDatos/medialunas_final.sql", "../baseDatos/medialunas_final.sql"};
+        vector<string> rutas = {"baseDatos/medialunas_mysql.sql", "../baseDatos/medialunas_mysql.sql"};
         for (string ruta : rutas) {
             ifstream archivo(ruta);
             if (!archivo.good()) continue;

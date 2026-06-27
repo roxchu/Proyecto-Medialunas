@@ -123,6 +123,14 @@ CMakeFiles/MedialunasPro.dir/DAO_implementacion/clienteDAOImple.cpp.o: \
  /usr/include/c++/14/bits/charconv.h \
  /usr/include/c++/14/bits/basic_string.tcc \
  /home/rochi/Escritorio/Proyecto\ Medialunas-Pro/DAO\ implementacion/../baseDatos/conexion.h \
+ /usr/include/mariadb/mysql.h /usr/include/time.h \
+ /usr/include/x86_64-linux-gnu/bits/time.h \
+ /usr/include/x86_64-linux-gnu/bits/timex.h \
+ /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
+ /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
+ /usr/include/mariadb/mariadb_com.h \
+ /usr/include/mariadb/mariadb_version.h /usr/include/mariadb/ma_list.h \
+ /usr/include/mariadb/mariadb_ctype.h /usr/include/mariadb/mariadb_stmt.h \
  /usr/include/c++/14/iostream /usr/include/c++/14/ostream \
  /usr/include/c++/14/ios /usr/include/c++/14/exception \
  /usr/include/c++/14/bits/exception_ptr.h \
@@ -142,11 +150,7 @@ CMakeFiles/MedialunasPro.dir/DAO_implementacion/clienteDAOImple.cpp.o: \
  /usr/lib/linux/uapi/x86/asm/posix_types_64.h \
  /usr/include/asm-generic/posix_types.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h \
- /usr/include/x86_64-linux-gnu/bits/cpu-set.h /usr/include/time.h \
- /usr/include/x86_64-linux-gnu/bits/time.h \
- /usr/include/x86_64-linux-gnu/bits/timex.h \
- /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
- /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
+ /usr/include/x86_64-linux-gnu/bits/cpu-set.h \
  /usr/include/x86_64-linux-gnu/bits/setjmp.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h \
  /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
@@ -167,4 +171,4 @@ CMakeFiles/MedialunasPro.dir/DAO_implementacion/clienteDAOImple.cpp.o: \
  /usr/include/c++/14/bits/locale_facets.tcc \
  /usr/include/c++/14/bits/basic_ios.tcc \
  /usr/include/c++/14/bits/ostream.tcc /usr/include/c++/14/istream \
- /usr/include/c++/14/bits/istream.tcc /usr/include/sqlite3.h
+ /usr/include/c++/14/bits/istream.tcc

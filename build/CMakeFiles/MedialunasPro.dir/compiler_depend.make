@@ -870,9 +870,14 @@ CMakeFiles/MedialunasPro.dir/DAO_implementacion/clienteDAOImple.cpp.o: /home/roc
   /usr/include/linux/stddef.h \
   /usr/include/linux/types.h \
   /usr/include/locale.h \
+  /usr/include/mariadb/ma_list.h \
+  /usr/include/mariadb/mariadb_com.h \
+  /usr/include/mariadb/mariadb_ctype.h \
+  /usr/include/mariadb/mariadb_stmt.h \
+  /usr/include/mariadb/mariadb_version.h \
+  /usr/include/mariadb/mysql.h \
   /usr/include/pthread.h \
   /usr/include/sched.h \
-  /usr/include/sqlite3.h \
   /usr/include/stdc-predef.h \
   /usr/include/stdio.h \
   /usr/include/stdlib.h \
@@ -1082,9 +1087,14 @@ CMakeFiles/MedialunasPro.dir/DAO_implementacion/insumosDAOImple.cpp.o: /home/roc
   /usr/include/linux/stddef.h \
   /usr/include/linux/types.h \
   /usr/include/locale.h \
+  /usr/include/mariadb/ma_list.h \
+  /usr/include/mariadb/mariadb_com.h \
+  /usr/include/mariadb/mariadb_ctype.h \
+  /usr/include/mariadb/mariadb_stmt.h \
+  /usr/include/mariadb/mariadb_version.h \
+  /usr/include/mariadb/mysql.h \
   /usr/include/pthread.h \
   /usr/include/sched.h \
-  /usr/include/sqlite3.h \
   /usr/include/stdc-predef.h \
   /usr/include/stdio.h \
   /usr/include/stdlib.h \
@@ -1294,9 +1304,14 @@ CMakeFiles/MedialunasPro.dir/DAO_implementacion/pedidosDAOimple.cpp.o: /home/roc
   /usr/include/linux/stddef.h \
   /usr/include/linux/types.h \
   /usr/include/locale.h \
+  /usr/include/mariadb/ma_list.h \
+  /usr/include/mariadb/mariadb_com.h \
+  /usr/include/mariadb/mariadb_ctype.h \
+  /usr/include/mariadb/mariadb_stmt.h \
+  /usr/include/mariadb/mariadb_version.h \
+  /usr/include/mariadb/mysql.h \
   /usr/include/pthread.h \
   /usr/include/sched.h \
-  /usr/include/sqlite3.h \
   /usr/include/stdc-predef.h \
   /usr/include/stdio.h \
   /usr/include/stdlib.h \
@@ -1506,9 +1521,14 @@ CMakeFiles/MedialunasPro.dir/DAO_implementacion/stockVentaDAOimple.cpp.o: /home/
   /usr/include/linux/stddef.h \
   /usr/include/linux/types.h \
   /usr/include/locale.h \
+  /usr/include/mariadb/ma_list.h \
+  /usr/include/mariadb/mariadb_com.h \
+  /usr/include/mariadb/mariadb_ctype.h \
+  /usr/include/mariadb/mariadb_stmt.h \
+  /usr/include/mariadb/mariadb_version.h \
+  /usr/include/mariadb/mysql.h \
   /usr/include/pthread.h \
   /usr/include/sched.h \
-  /usr/include/sqlite3.h \
   /usr/include/stdc-predef.h \
   /usr/include/stdio.h \
   /usr/include/stdlib.h \
@@ -1718,9 +1738,14 @@ CMakeFiles/MedialunasPro.dir/DAO_implementacion/variedadDAOimple.cpp.o: /home/ro
   /usr/include/linux/stddef.h \
   /usr/include/linux/types.h \
   /usr/include/locale.h \
+  /usr/include/mariadb/ma_list.h \
+  /usr/include/mariadb/mariadb_com.h \
+  /usr/include/mariadb/mariadb_ctype.h \
+  /usr/include/mariadb/mariadb_stmt.h \
+  /usr/include/mariadb/mariadb_version.h \
+  /usr/include/mariadb/mysql.h \
   /usr/include/pthread.h \
   /usr/include/sched.h \
-  /usr/include/sqlite3.h \
   /usr/include/stdc-predef.h \
   /usr/include/stdio.h \
   /usr/include/stdlib.h \
@@ -1939,9 +1964,14 @@ CMakeFiles/MedialunasPro.dir/InterfazGrafica.cpp.o: /home/rochi/Escritorio/Proye
   /usr/include/linux/stddef.h \
   /usr/include/linux/types.h \
   /usr/include/locale.h \
+  /usr/include/mariadb/ma_list.h \
+  /usr/include/mariadb/mariadb_com.h \
+  /usr/include/mariadb/mariadb_ctype.h \
+  /usr/include/mariadb/mariadb_stmt.h \
+  /usr/include/mariadb/mariadb_version.h \
+  /usr/include/mariadb/mysql.h \
   /usr/include/pthread.h \
   /usr/include/sched.h \
-  /usr/include/sqlite3.h \
   /usr/include/stdc-predef.h \
   /usr/include/stdio.h \
   /usr/include/stdlib.h \
@@ -2044,8 +2074,10 @@ CMakeFiles/MedialunasPro.dir/baseDatos/conexion.cpp.o: /home/rochi/Escritorio/Pr
   /usr/include/asm-generic/int-ll64.h \
   /usr/include/asm-generic/posix_types.h \
   /usr/include/asm-generic/types.h \
+  /usr/include/c++/14/algorithm \
   /usr/include/c++/14/backward/binders.h \
   /usr/include/c++/14/bit \
+  /usr/include/c++/14/bits/algorithmfwd.h \
   /usr/include/c++/14/bits/alloc_traits.h \
   /usr/include/c++/14/bits/allocator.h \
   /usr/include/c++/14/bits/basic_ios.h \
@@ -2059,6 +2091,7 @@ CMakeFiles/MedialunasPro.dir/baseDatos/conexion.cpp.o: /home/rochi/Escritorio/Pr
   /usr/include/c++/14/bits/cpp_type_traits.h \
   /usr/include/c++/14/bits/cxxabi_forced.h \
   /usr/include/c++/14/bits/cxxabi_init_exception.h \
+  /usr/include/c++/14/bits/erase_if.h \
   /usr/include/c++/14/bits/exception.h \
   /usr/include/c++/14/bits/exception_defines.h \
   /usr/include/c++/14/bits/exception_ptr.h \
@@ -2079,6 +2112,7 @@ CMakeFiles/MedialunasPro.dir/baseDatos/conexion.cpp.o: /home/rochi/Escritorio/Pr
   /usr/include/c++/14/bits/move.h \
   /usr/include/c++/14/bits/nested_exception.h \
   /usr/include/c++/14/bits/new_allocator.h \
+  /usr/include/c++/14/bits/node_handle.h \
   /usr/include/c++/14/bits/ostream.tcc \
   /usr/include/c++/14/bits/ostream_insert.h \
   /usr/include/c++/14/bits/postypes.h \
@@ -2087,21 +2121,33 @@ CMakeFiles/MedialunasPro.dir/baseDatos/conexion.cpp.o: /home/rochi/Escritorio/Pr
   /usr/include/c++/14/bits/range_access.h \
   /usr/include/c++/14/bits/refwrap.h \
   /usr/include/c++/14/bits/requires_hosted.h \
+  /usr/include/c++/14/bits/sstream.tcc \
   /usr/include/c++/14/bits/std_abs.h \
+  /usr/include/c++/14/bits/stl_algo.h \
   /usr/include/c++/14/bits/stl_algobase.h \
+  /usr/include/c++/14/bits/stl_bvector.h \
   /usr/include/c++/14/bits/stl_construct.h \
   /usr/include/c++/14/bits/stl_function.h \
+  /usr/include/c++/14/bits/stl_heap.h \
   /usr/include/c++/14/bits/stl_iterator.h \
   /usr/include/c++/14/bits/stl_iterator_base_funcs.h \
   /usr/include/c++/14/bits/stl_iterator_base_types.h \
+  /usr/include/c++/14/bits/stl_map.h \
+  /usr/include/c++/14/bits/stl_multimap.h \
   /usr/include/c++/14/bits/stl_pair.h \
+  /usr/include/c++/14/bits/stl_tempbuf.h \
+  /usr/include/c++/14/bits/stl_tree.h \
+  /usr/include/c++/14/bits/stl_uninitialized.h \
+  /usr/include/c++/14/bits/stl_vector.h \
   /usr/include/c++/14/bits/streambuf.tcc \
   /usr/include/c++/14/bits/streambuf_iterator.h \
   /usr/include/c++/14/bits/string_view.tcc \
   /usr/include/c++/14/bits/stringfwd.h \
+  /usr/include/c++/14/bits/uniform_int_dist.h \
   /usr/include/c++/14/bits/uses_allocator.h \
   /usr/include/c++/14/bits/uses_allocator_args.h \
   /usr/include/c++/14/bits/utility.h \
+  /usr/include/c++/14/bits/vector.tcc \
   /usr/include/c++/14/bits/version.h \
   /usr/include/c++/14/cctype \
   /usr/include/c++/14/cerrno \
@@ -2115,6 +2161,7 @@ CMakeFiles/MedialunasPro.dir/baseDatos/conexion.cpp.o: /home/rochi/Escritorio/Pr
   /usr/include/c++/14/debug/assertions.h \
   /usr/include/c++/14/debug/debug.h \
   /usr/include/c++/14/exception \
+  /usr/include/c++/14/ext/aligned_buffer.h \
   /usr/include/c++/14/ext/alloc_traits.h \
   /usr/include/c++/14/ext/atomicity.h \
   /usr/include/c++/14/ext/numeric_traits.h \
@@ -2126,9 +2173,13 @@ CMakeFiles/MedialunasPro.dir/baseDatos/conexion.cpp.o: /home/rochi/Escritorio/Pr
   /usr/include/c++/14/iosfwd \
   /usr/include/c++/14/iostream \
   /usr/include/c++/14/istream \
+  /usr/include/c++/14/map \
   /usr/include/c++/14/new \
   /usr/include/c++/14/ostream \
+  /usr/include/c++/14/pstl/execution_defs.h \
+  /usr/include/c++/14/pstl/glue_algorithm_defs.h \
   /usr/include/c++/14/pstl/pstl_config.h \
+  /usr/include/c++/14/sstream \
   /usr/include/c++/14/stdexcept \
   /usr/include/c++/14/streambuf \
   /usr/include/c++/14/string \
@@ -2137,6 +2188,7 @@ CMakeFiles/MedialunasPro.dir/baseDatos/conexion.cpp.o: /home/rochi/Escritorio/Pr
   /usr/include/c++/14/tuple \
   /usr/include/c++/14/type_traits \
   /usr/include/c++/14/typeinfo \
+  /usr/include/c++/14/vector \
   /usr/include/ctype.h \
   /usr/include/endian.h \
   /usr/include/errno.h \
@@ -2148,9 +2200,14 @@ CMakeFiles/MedialunasPro.dir/baseDatos/conexion.cpp.o: /home/rochi/Escritorio/Pr
   /usr/include/linux/stddef.h \
   /usr/include/linux/types.h \
   /usr/include/locale.h \
+  /usr/include/mariadb/ma_list.h \
+  /usr/include/mariadb/mariadb_com.h \
+  /usr/include/mariadb/mariadb_ctype.h \
+  /usr/include/mariadb/mariadb_stmt.h \
+  /usr/include/mariadb/mariadb_version.h \
+  /usr/include/mariadb/mysql.h \
   /usr/include/pthread.h \
   /usr/include/sched.h \
-  /usr/include/sqlite3.h \
   /usr/include/stdc-predef.h \
   /usr/include/stdio.h \
   /usr/include/stdlib.h \
@@ -2966,9 +3023,13 @@ MedialunasPro: /lib/x86_64-linux-gnu/libX11.so.6 \
   /lib/x86_64-linux-gnu/libXau.so.6 \
   /lib/x86_64-linux-gnu/libXdmcp.so.6 \
   /lib/x86_64-linux-gnu/libc.so.6 \
+  /lib/x86_64-linux-gnu/libcrypto.so.3 \
   /lib/x86_64-linux-gnu/libm.so.6 \
   /lib/x86_64-linux-gnu/libmvec.so.1 \
+  /lib/x86_64-linux-gnu/libssl.so.3 \
   /lib/x86_64-linux-gnu/libxcb.so.1 \
+  /lib/x86_64-linux-gnu/libz.so.1 \
+  /lib/x86_64-linux-gnu/libzstd.so.1 \
   /lib64/ld-linux-x86-64.so.2 \
   /usr/lib/x86_64-linux-gnu/Scrt1.o \
   /usr/lib/x86_64-linux-gnu/crti.o \
@@ -2982,7 +3043,7 @@ MedialunasPro: /lib/x86_64-linux-gnu/libX11.so.6 \
   /usr/lib/gcc/x86_64-linux-gnu/14/libgcc_s.so \
   /usr/lib/gcc/x86_64-linux-gnu/14/libstdc++.so \
   /usr/lib/x86_64-linux-gnu/libc_nonshared.a \
-  /usr/lib/x86_64-linux-gnu/libsqlite3.so \
+  /usr/lib/x86_64-linux-gnu/libmariadb.so \
   /usr/local/lib/libraylib.so.6.0.0 \
   CMakeFiles/MedialunasPro.dir/DAO/clienteDAO.cpp.o \
   CMakeFiles/MedialunasPro.dir/DAO/insumosDAO.cpp.o \
@@ -3024,15 +3085,13 @@ CMakeFiles/MedialunasPro.dir/DAO_implementacion/clienteDAOImple.cpp.o:
 
 CMakeFiles/MedialunasPro.dir/DAO/stockVentaDAO.cpp.o:
 
-CMakeFiles/MedialunasPro.dir/DAO/pedidosDAO.cpp.o:
-
-/usr/lib/x86_64-linux-gnu/libsqlite3.so:
-
 /usr/lib/x86_64-linux-gnu/libc_nonshared.a:
 
 /usr/lib/gcc/x86_64-linux-gnu/14/libgcc.a:
 
 /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o:
+
+/usr/lib/x86_64-linux-gnu/libmariadb.so:
 
 /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o:
 
@@ -3044,9 +3103,27 @@ CMakeFiles/MedialunasPro.dir/DAO/pedidosDAO.cpp.o:
 
 /lib/x86_64-linux-gnu/libxcb.so.1:
 
+/lib/x86_64-linux-gnu/libssl.so.3:
+
+/lib/x86_64-linux-gnu/libcrypto.so.3:
+
 /lib/x86_64-linux-gnu/libc.so.6:
 
 /lib/x86_64-linux-gnu/libXau.so.6:
+
+/home/rochi/Escritorio/Proyecto\ Medialunas-Pro/models/stockVenta.cpp:
+
+/home/rochi/Escritorio/Proyecto\ Medialunas-Pro/models/cliente.cpp:
+
+/home/rochi/Escritorio/Proyecto\ Medialunas-Pro/main.cpp:
+
+/usr/include/c++/14/map:
+
+/usr/include/c++/14/bits/stl_tree.h:
+
+/usr/include/c++/14/bits/stl_multimap.h:
+
+/usr/include/c++/14/bits/stl_map.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
 
@@ -3057,6 +3134,8 @@ CMakeFiles/MedialunasPro.dir/DAO/pedidosDAO.cpp.o:
 /usr/include/x86_64-linux-gnu/bits/types/locale_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/error_t.h:
+
+/usr/include/c++/14/bits/erase_if.h:
 
 /usr/include/x86_64-linux-gnu/bits/time64.h:
 
@@ -3079,8 +3158,6 @@ CMakeFiles/MedialunasPro.dir/DAO/pedidosDAO.cpp.o:
 /usr/include/c++/14/pstl/pstl_config.h:
 
 /usr/include/x86_64-linux-gnu/gnu/stubs.h:
-
-/home/rochi/Escritorio/Proyecto\ Medialunas-Pro/main.cpp:
 
 /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h:
 
@@ -3110,8 +3187,6 @@ CMakeFiles/MedialunasPro.dir/DAO/pedidosDAO.cpp.o:
 
 /usr/include/c++/14/debug/debug.h:
 
-/usr/include/endian.h:
-
 /usr/include/c++/14/bits/localefwd.h:
 
 /usr/include/ctype.h:
@@ -3127,6 +3202,12 @@ CMakeFiles/MedialunasPro.dir/DAO/pedidosDAO.cpp.o:
 /usr/include/c++/14/bits/stl_tempbuf.h:
 
 /usr/include/linux/stddef.h:
+
+/lib/x86_64-linux-gnu/libm.so.6:
+
+/home/rochi/Escritorio/Proyecto\ Medialunas-Pro/models/pedidos.cpp:
+
+/usr/include/c++/14/iosfwd:
 
 /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h:
 
@@ -3178,8 +3259,6 @@ CMakeFiles/MedialunasPro.dir/models/cliente.cpp.o:
 
 /usr/include/c++/14/bits/invoke.h:
 
-/home/rochi/Escritorio/Proyecto\ Medialunas-Pro/models/stockVenta.cpp:
-
 /usr/include/x86_64-linux-gnu/bits/endianness.h:
 
 /usr/include/c++/14/bits/stl_uninitialized.h:
@@ -3222,6 +3301,8 @@ CMakeFiles/MedialunasPro.dir/models/cliente.cpp.o:
 
 /usr/include/c++/14/bits/functexcept.h:
 
+/lib/x86_64-linux-gnu/libz.so.1:
+
 /usr/include/pthread.h:
 
 /home/rochi/Escritorio/Proyecto\ Medialunas-Pro/DAO\ implementacion/insumosDAOImple.h:
@@ -3242,6 +3323,10 @@ CMakeFiles/MedialunasPro.dir/models/cliente.cpp.o:
 
 /usr/include/c++/14/bits/stl_vector.h:
 
+/home/rochi/Escritorio/Proyecto\ Medialunas-Pro/InterfazGrafica.h:
+
+/home/rochi/Escritorio/Proyecto\ Medialunas-Pro/DAO/DAO.h:
+
 /usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
 
 /usr/include/c++/14/bits/move.h:
@@ -3257,6 +3342,10 @@ CMakeFiles/MedialunasPro.dir/models/cliente.cpp.o:
 /home/rochi/Escritorio/Proyecto\ Medialunas-Pro/DAO/clienteDAO.h:
 
 /usr/include/c++/14/bits/char_traits.h:
+
+/home/rochi/Escritorio/Proyecto\ Medialunas-Pro/models/insumos.cpp:
+
+/home/rochi/Escritorio/Proyecto\ Medialunas-Pro/baseDatos/conexion.h:
 
 /home/rochi/Escritorio/Proyecto\ Medialunas-Pro/models/variedad.cpp:
 
@@ -3278,9 +3367,9 @@ CMakeFiles/MedialunasPro.dir/models/cliente.cpp.o:
 
 CMakeFiles/MedialunasPro.dir/DAO/clienteDAO.cpp.o:
 
-/usr/include/x86_64-linux-gnu/bits/wchar.h:
+/usr/include/mariadb/mariadb_stmt.h:
 
-/usr/include/x86_64-linux-gnu/bits/errno.h:
+/usr/include/x86_64-linux-gnu/bits/wchar.h:
 
 /home/rochi/Escritorio/Proyecto\ Medialunas-Pro/models/cliente.h:
 
@@ -3289,8 +3378,6 @@ CMakeFiles/MedialunasPro.dir/DAO/clienteDAO.cpp.o:
 /home/rochi/Escritorio/Proyecto\ Medialunas-Pro/DAO/pedidosDAO.cpp:
 
 /home/rochi/Escritorio/Proyecto\ Medialunas-Pro/DAO/insumosDAO.cpp:
-
-/usr/include/features.h:
 
 /usr/lib/x86_64-linux-gnu/crti.o:
 
@@ -3334,9 +3421,9 @@ CMakeFiles/MedialunasPro.dir/DAO_implementacion/insumosDAOImple.cpp.o:
 
 /usr/include/c++/14/bits/range_access.h:
 
-/usr/include/c++/14/string:
+/lib/x86_64-linux-gnu/libzstd.so.1:
 
-/home/rochi/Escritorio/Proyecto\ Medialunas-Pro/models/cliente.cpp:
+/usr/include/c++/14/string:
 
 /usr/include/c++/14/bits/uses_allocator_args.h:
 
@@ -3414,10 +3501,6 @@ CMakeFiles/MedialunasPro.dir/InterfazGrafica.cpp.o:
 
 /usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
 
-/usr/include/x86_64-linux-gnu/c++/14/bits/gthr-default.h:
-
-/usr/include/x86_64-linux-gnu/sys/cdefs.h:
-
 /usr/include/x86_64-linux-gnu/sys/types.h:
 
 /home/rochi/Escritorio/Proyecto\ Medialunas-Pro/models/insumos.h:
@@ -3462,6 +3545,8 @@ CMakeFiles/MedialunasPro.dir/DAO/insumosDAO.cpp.o:
 
 /usr/include/c++/14/bits/nested_exception.h:
 
+/usr/include/c++/14/ext/aligned_buffer.h:
+
 /usr/include/c++/14/bits/concept_check.h:
 
 /usr/include/c++/14/bits/ostream.tcc:
@@ -3496,11 +3581,29 @@ CMakeFiles/MedialunasPro.dir/DAO/insumosDAO.cpp.o:
 
 /usr/lib/linux/uapi/x86/asm/posix_types_64.h:
 
+/usr/include/x86_64-linux-gnu/bits/errno.h:
+
+/usr/include/mariadb/ma_list.h:
+
+/usr/include/x86_64-linux-gnu/c++/14/bits/gthr-default.h:
+
+/usr/include/x86_64-linux-gnu/sys/cdefs.h:
+
+/usr/include/mariadb/mariadb_com.h:
+
+CMakeFiles/MedialunasPro.dir/DAO/pedidosDAO.cpp.o:
+
+/usr/include/mariadb/mariadb_ctype.h:
+
+/usr/include/endian.h:
+
+/usr/include/mariadb/mariadb_version.h:
+
+/usr/include/mariadb/mysql.h:
+
 /usr/include/wctype.h:
 
 /usr/include/sched.h:
-
-/usr/include/sqlite3.h:
 
 /usr/include/x86_64-linux-gnu/bits/setjmp.h:
 
@@ -3584,16 +3687,6 @@ CMakeFiles/MedialunasPro.dir/DAO_implementacion/pedidosDAOimple.cpp.o:
 
 /home/rochi/Escritorio/Proyecto\ Medialunas-Pro/baseDatos/conexion.cpp:
 
-/home/rochi/Escritorio/Proyecto\ Medialunas-Pro/DAO/DAO.h:
+/usr/include/features.h:
 
-/home/rochi/Escritorio/Proyecto\ Medialunas-Pro/InterfazGrafica.h:
-
-/home/rochi/Escritorio/Proyecto\ Medialunas-Pro/baseDatos/conexion.h:
-
-/home/rochi/Escritorio/Proyecto\ Medialunas-Pro/models/insumos.cpp:
-
-/lib/x86_64-linux-gnu/libm.so.6:
-
-/usr/include/c++/14/iosfwd:
-
-/home/rochi/Escritorio/Proyecto\ Medialunas-Pro/models/pedidos.cpp:
+/usr/include/c++/14/bits/node_handle.h:

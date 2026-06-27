@@ -162,6 +162,11 @@ def precio_docena(con, id_variedad):
 
 
 def factura_html(id_pedido):
+    try:
+        id_pedido = int(id_pedido)
+    except (TypeError, ValueError):
+        return page("Pedido invalido", '<section class="warn">Ingrese un ID de pedido valido.</section>')
+
     with db() as con:
         pedido = con.execute(
             """
@@ -215,6 +220,13 @@ def factura_html(id_pedido):
             <tbody>{filas}</tbody>
             <tfoot><tr><th colspan="4">Total</th><th>${totalizar(total)}</th></tr></tfoot>
           </table>
+        </section>
+        <section>
+          <h2>Consultar otro pedido</h2>
+          <form method="get" action="/pedido">
+            <label>ID de pedido<input name="id" type="number" min="1" required></label>
+            <div><button type="submit">Ver estado y factura</button></div>
+          </form>
         </section>
         """,
     )

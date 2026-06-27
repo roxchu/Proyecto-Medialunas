@@ -15,6 +15,10 @@ function precioDocena(PDO $pdo, int $idVariedad): float {
 }
 
 function factura(PDO $pdo, int $idPedido): string {
+    if ($idPedido <= 0) {
+        return '<section class="warn">Ingrese un ID de pedido valido.</section>';
+    }
+
     $stmt = $pdo->prepare("
         SELECT p.id, p.idCliente, p.fechaPedido, p.estado,
                c.nombre, c.direccion, c.metodoPago
@@ -72,6 +76,17 @@ function factura(PDO $pdo, int $idPedido): string {
             <tbody>' . $rows . '</tbody>
             <tfoot><tr><th colspan="4">Total</th><th>$' . money($total) . '</th></tr></tfoot>
         </table>
+    </section>
+    <section>
+        <h2>Consultar otro pedido</h2>
+        <form method="get" action="pedido.php">
+            <label>ID de pedido
+                <input name="id" type="number" min="1" required>
+            </label>
+            <div>
+                <button type="submit">Ver estado y factura</button>
+            </div>
+        </form>
     </section>';
 }
 
@@ -112,7 +127,7 @@ try {
     $stmt->execute([$nombre, $cuit, $direccion, $telefono, $metodoPago]);
     $idCliente = (int)$pdo->lastInsertId();
 
-    $stmt = $pdo->prepare("INSERT INTO pedidos (idCliente, fechaPedido, estado) VALUES (?, date('now'), 'Pendiente')");
+    $stmt = $pdo->prepare("INSERT INTO pedidos (idCliente, fechaPedido, estado) VALUES (?, CURDATE(), 'Pendiente')");
     $stmt->execute([$idCliente]);
     $idPedido = (int)$pdo->lastInsertId();
 
@@ -126,6 +141,7 @@ try {
         <p>Tu ID de pedido es <strong>' . h($idPedido) . '</strong>.</p>
         <p>Con ese numero podes consultar el estado y la factura.</p>
         <a href="pedido.php?id=' . h($idPedido) . '">Ver mi pedido</a>
+        <a href="consulta.php">Consultar otro pedido</a>
     </section>');
 } catch (Throwable $error) {
     if ($pdo->inTransaction()) {

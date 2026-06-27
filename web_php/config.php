@@ -1,11 +1,22 @@
 <?php
-$dbPath = __DIR__ . '/../baseDatos/medialunas.db';
+$dbConfig = [
+    'host' => getenv('MEDIALUNAS_DB_HOST') ?: '127.0.0.1',
+    'port' => getenv('MEDIALUNAS_DB_PORT') ?: '3306',
+    'name' => getenv('MEDIALUNAS_DB_NAME') ?: 'medialunas_pro',
+    'user' => getenv('MEDIALUNAS_DB_USER') ?: 'root',
+    'pass' => getenv('MEDIALUNAS_DB_PASS') ?: '',
+];
+
+$localConfig = __DIR__ . '/database.local.php';
+if (is_file($localConfig)) {
+    $dbConfig = array_merge($dbConfig, require $localConfig);
+}
 
 function db(): PDO {
-    global $dbPath;
-    $pdo = new PDO('sqlite:' . $dbPath);
+    global $dbConfig;
+    $dsn = 'mysql:host=' . $dbConfig['host'] . ';port=' . $dbConfig['port'] . ';dbname=' . $dbConfig['name'] . ';charset=utf8mb4';
+    $pdo = new PDO($dsn, $dbConfig['user'], $dbConfig['pass']);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $pdo->exec('PRAGMA foreign_keys = ON');
     $pdo->exec('DELETE FROM detallePedido WHERE NOT EXISTS (SELECT 1 FROM pedidos WHERE pedidos.id = detallePedido.idPedido)');
     return $pdo;
 }

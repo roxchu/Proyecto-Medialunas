@@ -21,7 +21,7 @@ MedialunasPro: \
   CMakeFiles/MedialunasPro.dir/DAO_implementacion/stockVentaDAOimple.cpp.o \
   CMakeFiles/MedialunasPro.dir/DAO_implementacion/variedadDAOimple.cpp.o \
   /usr/local/lib/libraylib.so.6.0.0 \
-  /usr/lib/x86_64-linux-gnu/libsqlite3.so \
+  /usr/lib/x86_64-linux-gnu/libmariadb.so \
   /usr/lib/gcc/x86_64-linux-gnu/14/libstdc++.so \
   /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libm.so \
   /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libm.so \
@@ -50,8 +50,12 @@ MedialunasPro: \
   /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o \
   /lib/x86_64-linux-gnu/libm.so.6 \
   /lib/x86_64-linux-gnu/libX11.so.6 \
+  /lib/x86_64-linux-gnu/libz.so.1 \
+  /lib/x86_64-linux-gnu/libssl.so.3 \
+  /lib/x86_64-linux-gnu/libcrypto.so.3 \
   /lib64/ld-linux-x86-64.so.2 \
   /lib/x86_64-linux-gnu/libxcb.so.1 \
+  /lib/x86_64-linux-gnu/libzstd.so.1 \
   /lib/x86_64-linux-gnu/libXau.so.6 \
   /lib/x86_64-linux-gnu/libXdmcp.so.6
 
@@ -99,7 +103,7 @@ CMakeFiles/MedialunasPro.dir/DAO_implementacion/variedadDAOimple.cpp.o:
 
 /usr/local/lib/libraylib.so.6.0.0:
 
-/usr/lib/x86_64-linux-gnu/libsqlite3.so:
+/usr/lib/x86_64-linux-gnu/libmariadb.so:
 
 /usr/lib/gcc/x86_64-linux-gnu/14/libstdc++.so:
 
@@ -157,9 +161,17 @@ CMakeFiles/MedialunasPro.dir/DAO_implementacion/variedadDAOimple.cpp.o:
 
 /lib/x86_64-linux-gnu/libX11.so.6:
 
+/lib/x86_64-linux-gnu/libz.so.1:
+
+/lib/x86_64-linux-gnu/libssl.so.3:
+
+/lib/x86_64-linux-gnu/libcrypto.so.3:
+
 /lib64/ld-linux-x86-64.so.2:
 
 /lib/x86_64-linux-gnu/libxcb.so.1:
+
+/lib/x86_64-linux-gnu/libzstd.so.1:
 
 /lib/x86_64-linux-gnu/libXau.so.6:
 

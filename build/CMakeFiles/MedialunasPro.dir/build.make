@@ -369,7 +369,7 @@ MedialunasPro: CMakeFiles/MedialunasPro.dir/DAO_implementacion/variedadDAOimple.
 MedialunasPro: CMakeFiles/MedialunasPro.dir/build.make
 MedialunasPro: CMakeFiles/MedialunasPro.dir/compiler_depend.ts
 MedialunasPro: /usr/local/lib/libraylib.so.6.0.0
-MedialunasPro: /usr/lib/x86_64-linux-gnu/libsqlite3.so
+MedialunasPro: /usr/lib/x86_64-linux-gnu/libmariadb.so
 MedialunasPro: CMakeFiles/MedialunasPro.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="/home/rochi/Escritorio/Proyecto Medialunas-Pro/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_19) "Linking CXX executable MedialunasPro"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/MedialunasPro.dir/link.txt --verbose=$(VERBOSE)
