@@ -22,6 +22,7 @@ struct sqlite3_stmt {
     sqlite3* db;
     string sql;
     vector<string> parametros;
+    vector<bool> parametrosNull;
     vector<vector<string>> filas;
     vector<string> filaActual;
     size_t indiceFila;
@@ -36,6 +37,7 @@ int sqlite3_prepare_v2(sqlite3* db, const char* sql, int bytes, sqlite3_stmt** s
 int sqlite3_step(sqlite3_stmt* stmt);
 int sqlite3_finalize(sqlite3_stmt* stmt);
 int sqlite3_bind_text(sqlite3_stmt* stmt, int posicion, const char* valor, int bytes, void* destructor);
+int sqlite3_bind_null(sqlite3_stmt* stmt, int posicion);
 const unsigned char* sqlite3_column_text(sqlite3_stmt* stmt, int columna);
 int sqlite3_column_int(sqlite3_stmt* stmt, int columna);
 double sqlite3_column_double(sqlite3_stmt* stmt, int columna);

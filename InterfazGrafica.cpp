@@ -203,7 +203,7 @@ private:
             {"Vehiculos", "vehiculos", "Logistica", {{"id", "ID", true, true, false}, {"patente", "Patente", false, false, false}, {"modelo", "Modelo", false, false, false}, {"estadoMantenimiento", "Mantenimiento", false, false, false}}},
             {"Hoja de ruta", "hojaRuta", "Logistica", {{"id", "ID", true, true, false}, {"idVehiculo", "ID vehiculo", false, false, false}, {"idPedido", "ID pedido", false, false, false}, {"ordenEntrega", "Orden", false, false, false}, {"idEmpleado", "DNI empleado", false, false, false}}},
             {"Usuarios", "usuario", "Admin", {{"DNI", "DNI", true, false, false}, {"nombre", "Nombre", false, false, false}, {"apellido", "Apellido", false, false, false}, {"direccion", "Direccion", false, false, false}, {"telefono", "Telefono", false, false, false}, {"email", "Email", false, false, false}, {"contactoEmergencia", "Tel. emergencia", false, false, false}, {"nombreCE", "Contacto emergencia", false, false, false}, {"idCategoria", "ID categoria", false, false, false}, {"sector", "Sector", false, false, false}, {"cuenta", "Usuario", false, false, false}, {"clave", "Contrasena", false, false, true}}},
-            {"Categorias usuario", "categoriaUsuario", "Admin", {{"id", "ID", true, true, false}, {"nombreCategoria", "Categoria", false, false, false}}}
+            {"Categorias usuario", "categoriaUsuario", "Admin", {{"id", "ID", true, true, false}, {"nombreCategoria", "Nombre categoria", false, false, false}}}
         };
     }
 
@@ -325,7 +325,7 @@ private:
         Boton nuevo("Crear", {220, 292, 115, 38});
         Boton guardar(claveSeleccionada.empty() ? "Guardar" : "Actualizar", {350, 292, 125, 38});
         Boton eliminar("Borrar", {490, 292, 125, 38});
-        Boton salir("Cerrar sesion", {1005, 700, 135, 38});
+        Boton salir("Cerrar sesion", {1035, 24, 135, 34});
         if (nuevo.presionado(mouse)) {
             if (puedeCrear()) limpiarFormulario();
             else mensaje = "No tenes permiso para crear en este panel";
@@ -403,9 +403,9 @@ private:
 
     void cargarDatos() {
         filas.clear();
-        Conexion con("medialunas.db");
+        Conexion con("medialunas_pro");
         if (!con.conectar()) {
-            mensaje = "No se pudo conectar a la base remota";
+            mensaje = "No se pudo conectar a la base de datos";
             return;
         }
 
@@ -439,11 +439,14 @@ private:
         }
 
         if (config.tabla == "stockVenta") {
-            return "SELECT v.id, v.nombreVariedad, "
-                   "COALESCE((SELECT SUM(lp.cantidadProducida) FROM lotesProduccion lp WHERE lp.idVariedad = v.id), 0) - "
-                   "COALESCE((SELECT SUM(dp.cantidad) FROM detallePedido dp WHERE dp.idVariedad = v.id), 0), "
-                   "COALESCE((SELECT sv.precioUnitario FROM stockVenta sv WHERE sv.idVariedad = v.id ORDER BY sv.id DESC LIMIT 1), 0) "
-                   "FROM variedad v ORDER BY v.id";
+            return "SELECT sv.idVariedad, v.nombreVariedad, "
+                   "COALESCE((SELECT SUM(lp.cantidadProducida) FROM lotesProduccion lp WHERE lp.idVariedad = sv.idVariedad), 0) - "
+                   "COALESCE((SELECT SUM(dp.cantidad) FROM detallePedido dp WHERE dp.idVariedad = sv.idVariedad), 0), "
+                   "sv.precioUnitario "
+                   "FROM stockVenta sv "
+                   "LEFT JOIN variedad v ON v.id = sv.idVariedad "
+                   "WHERE sv.id = (SELECT MAX(sv2.id) FROM stockVenta sv2 WHERE sv2.idVariedad = sv.idVariedad) "
+                   "ORDER BY sv.idVariedad";
         }
 
         string sql = "SELECT ";
@@ -464,6 +467,20 @@ private:
 
     bool validarReglasDelPanel() {
         const ConfigTabla& config = tablas[tablaActual];
+        for (int i = 0; i < (int)config.campos.size(); i++) {
+            string valor = trim(formulario[i].getValor());
+            if (!valor.empty() && esCampoNumerico(config.campos[i].columna) && !esNumero(valor)) {
+                mensaje = config.campos[i].etiqueta + " debe ser numerico";
+                return false;
+            }
+            if (valor.empty() && config.campos[i].clave && !config.campos[i].autoIncremental) {
+                mensaje = "Complete " + config.campos[i].etiqueta;
+                return false;
+            }
+        }
+
+        if (!validarRelaciones(config)) return false;
+
         if (config.tabla != "usuario") return true;
 
         int indiceCategoria = indiceCampo("idCategoria");
@@ -482,6 +499,87 @@ private:
         }
 
         return true;
+    }
+
+    bool validarRelaciones(const ConfigTabla& config) {
+        if (!validarRelacion(config, "idPedido", "pedidos", "id", "pedido")) return false;
+        if (!validarRelacion(config, "idCliente", "clientes", "id", "cliente")) return false;
+        if (!validarRelacion(config, "idVariedad", "variedad", "id", "variedad")) return false;
+        if (!validarRelacion(config, "idInsumo", "insumos", "id", "insumo")) return false;
+        if (!validarRelacion(config, "idReceta", "receta", "id", "receta")) return false;
+        if (!validarRelacion(config, "idLote", "lotesProduccion", "id", "lote de produccion")) return false;
+        if (!validarRelacion(config, "idLoteProduccion", "lotesProduccion", "id", "lote de produccion")) return false;
+        if (!validarRelacion(config, "idVehiculo", "vehiculos", "id", "vehiculo")) return false;
+        if (!validarRelacion(config, "idEmpleado", "usuario", "DNI", "empleado")) return false;
+        if (!validarRelacion(config, "idCategoria", "categoriaUsuario", "id", "categoria")) return false;
+        return true;
+    }
+
+    bool validarRelacion(const ConfigTabla& config, const string& columna, const string& tablaRef, const string& columnaRef, const string& nombre) {
+        int indice = indiceCampo(columna);
+        if (indice < 0) return true;
+        string valor = trim(formulario[indice].getValor());
+        if (valor.empty()) return true;
+        if (!existeValor(tablaRef, columnaRef, valor)) {
+            mensaje = "No existe " + nombre + " con ID " + valor;
+            return false;
+        }
+        return true;
+    }
+
+    bool existeValor(const string& tabla, const string& columna, const string& valor) {
+        Conexion con("medialunas_pro");
+        if (!con.conectar()) return false;
+        string sql = "SELECT 1 FROM " + tabla + " WHERE " + columna + "=? LIMIT 1";
+        sqlite3_stmt* stmt = nullptr;
+        bool existe = false;
+        if (sqlite3_prepare_v2(con.getDB(), sql.c_str(), -1, &stmt, NULL) == SQLITE_OK) {
+            bindTexto(stmt, 1, valor);
+            existe = sqlite3_step(stmt) == SQLITE_ROW;
+        }
+        sqlite3_finalize(stmt);
+        con.cerrar();
+        return existe;
+    }
+
+    string trim(const string& valor) {
+        size_t inicio = 0;
+        while (inicio < valor.size() && isspace((unsigned char)valor[inicio])) inicio++;
+        size_t fin = valor.size();
+        while (fin > inicio && isspace((unsigned char)valor[fin - 1])) fin--;
+        return valor.substr(inicio, fin - inicio);
+    }
+
+    bool esNumero(const string& valor) {
+        bool digito = false;
+        bool punto = false;
+        for (int i = 0; i < (int)valor.size(); i++) {
+            char c = valor[i];
+            if ((c == '-' || c == '+') && i == 0) continue;
+            if (c == '.' || c == ',') {
+                if (punto) return false;
+                punto = true;
+                continue;
+            }
+            if (!isdigit((unsigned char)c)) return false;
+            digito = true;
+        }
+        return digito;
+    }
+
+    bool esCampoNumerico(const string& columna) {
+        return columna == "DNI" || columna == "id" || columna == "idCliente" || columna == "idPedido" ||
+               columna == "idVariedad" || columna == "idInsumo" || columna == "idReceta" ||
+               columna == "idLote" || columna == "idLoteProduccion" || columna == "idVehiculo" ||
+               columna == "idEmpleado" || columna == "idCategoria" || columna == "cantidad" ||
+               columna == "cantidadActual" || columna == "cantidadEsperada" || columna == "cantidadProducida" ||
+               columna == "precioUnitario" || columna == "stockDisponible" || columna == "stockMinimo" ||
+               columna == "costoUnitario" || columna == "ordenEntrega";
+    }
+
+    bool aceptaNull(const string& columna) {
+        return columna != "DNI" && columna != "idPedido" && columna != "idVariedad" &&
+               columna != "idReceta" && columna != "idInsumo" && esCampoNumerico(columna);
     }
 
     int indiceCampo(const string& columna) {
@@ -504,9 +602,9 @@ private:
     }
 
     void insertarRegistro() {
-        Conexion con("medialunas.db");
+        Conexion con("medialunas_pro");
         if (!con.conectar()) {
-            mensaje = "No se pudo conectar a la base remota";
+            mensaje = "No se pudo conectar a la base de datos";
             return;
         }
         const ConfigTabla& config = tablas[tablaActual];
@@ -529,7 +627,7 @@ private:
 
         sqlite3_stmt* stmt = nullptr;
         if (sqlite3_prepare_v2(con.getDB(), sql.c_str(), -1, &stmt, NULL) == SQLITE_OK) {
-            for (int i = 0; i < (int)indices.size(); i++) bindTexto(stmt, i + 1, formulario[indices[i]].getValor());
+            for (int i = 0; i < (int)indices.size(); i++) bindValor(stmt, i + 1, config.campos[indices[i]], formulario[indices[i]].getValor());
             if (sqlite3_step(stmt) == SQLITE_DONE) {
                 limpiarFormulario();
                 mensaje = "Registro guardado";
@@ -544,9 +642,9 @@ private:
     }
 
     void actualizarRegistro() {
-        Conexion con("medialunas.db");
+        Conexion con("medialunas_pro");
         if (!con.conectar()) {
-            mensaje = "No se pudo conectar a la base remota";
+            mensaje = "No se pudo conectar a la base de datos";
             return;
         }
         const ConfigTabla& config = tablas[tablaActual];
@@ -567,7 +665,7 @@ private:
         sqlite3_stmt* stmt = nullptr;
         if (sqlite3_prepare_v2(con.getDB(), sql.c_str(), -1, &stmt, NULL) == SQLITE_OK) {
             int pos = 1;
-            for (int indice : editables) bindTexto(stmt, pos++, formulario[indice].getValor());
+            for (int indice : editables) bindValor(stmt, pos++, config.campos[indice], formulario[indice].getValor());
             for (string clave : claveSeleccionada) bindTexto(stmt, pos++, clave);
             if (sqlite3_step(stmt) == SQLITE_DONE) {
                 limpiarFormulario();
@@ -588,9 +686,9 @@ private:
             return;
         }
 
-        Conexion con("medialunas.db");
+        Conexion con("medialunas_pro");
         if (!con.conectar()) {
-            mensaje = "No se pudo conectar a la base remota";
+            mensaje = "No se pudo conectar a la base de datos";
             return;
         }
         const ConfigTabla& config = tablas[tablaActual];
@@ -629,10 +727,19 @@ private:
         sqlite3_bind_text(stmt, posicion, valor.c_str(), -1, SQLITE_TRANSIENT);
     }
 
+    void bindValor(sqlite3_stmt* stmt, int posicion, const CampoTabla& campo, const string& valor) {
+        string limpio = trim(valor);
+        if (limpio.empty() && aceptaNull(campo.columna)) {
+            sqlite3_bind_null(stmt, posicion);
+            return;
+        }
+        sqlite3_bind_text(stmt, posicion, limpio.c_str(), -1, SQLITE_TRANSIENT);
+    }
+
     void iniciarSesion() {
-        Conexion con("medialunas.db");
+        Conexion con("medialunas_pro");
         if (!con.conectar()) {
-            mensaje = "No se pudo conectar a la base remota";
+            mensaje = "No se pudo conectar a la base de datos";
             return;
         }
         string sql = "SELECT DNI, nombre, idCategoria, sector FROM usuario WHERE cuenta=? AND clave=?";
@@ -670,9 +777,9 @@ private:
             return;
         }
 
-        Conexion con("medialunas.db");
+        Conexion con("medialunas_pro");
         if (!con.conectar()) {
-            mensaje = "No se pudo conectar a la base remota";
+            mensaje = "No se pudo conectar a la base de datos";
             return;
         }
         string sql = "INSERT INTO usuario (DNI, nombre, apellido, direccion, telefono, email, contactoEmergencia, nombreCE, idCategoria, sector, cuenta, clave) VALUES (?, ?, ?, '', ?, ?, '', '', 3, 'Ventas', ?, ?)";
@@ -732,9 +839,9 @@ private:
     }
 
     void inicializarBase() {
-        Conexion con("medialunas.db");
+        Conexion con("medialunas_pro");
         if (!con.conectar()) {
-            mensaje = "No se pudo conectar a la base remota";
+            mensaje = "No se pudo conectar a la base de datos";
             return;
         }
         ejecutarSqlArchivo(con.getDB());

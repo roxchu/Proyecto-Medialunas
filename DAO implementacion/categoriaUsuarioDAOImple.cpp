@@ -4,7 +4,7 @@
 categoriaUsuarioDAOImpl::categoriaUsuarioDAOImpl() {}
 
 void categoriaUsuarioDAOImpl::insertar(categoriaUsuario cu) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "INSERT INTO categoriaUsuario (nombreCategoria) VALUES ('"
@@ -16,7 +16,7 @@ void categoriaUsuarioDAOImpl::insertar(categoriaUsuario cu) {
 }
 
 void categoriaUsuarioDAOImpl::eliminar(categoriaUsuario cu) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "DELETE FROM categoriaUsuario WHERE id = " + to_string(cu.getId());
@@ -28,7 +28,7 @@ void categoriaUsuarioDAOImpl::eliminar(categoriaUsuario cu) {
 
 categoriaUsuario categoriaUsuarioDAOImpl::buscarPorId(int id) {
     categoriaUsuario cu;
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     if (!con.conectar()) return cu;
     sqlite3_stmt *stmt;
     string sql = "SELECT * FROM [TABLA] WHERE id = " + to_string(id);
@@ -44,7 +44,7 @@ categoriaUsuario categoriaUsuarioDAOImpl::buscarPorId(int id) {
 
 vector<categoriaUsuario> categoriaUsuarioDAOImpl::listar() {
     vector<categoriaUsuario> lista;
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     if (!con.conectar()) return lista;
     sqlite3_stmt *stmt;
     string sql = "SELECT * FROM categoriaUsuario";
@@ -61,7 +61,7 @@ vector<categoriaUsuario> categoriaUsuarioDAOImpl::listar() {
 }
 
 void categoriaUsuarioDAOImpl::actualizar(categoriaUsuario cu) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "UPDATE categoriaUsuario SET nombreCategoria='" + cu.getNombreCategoria()

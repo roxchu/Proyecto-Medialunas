@@ -4,7 +4,7 @@
 hojaRutaDAOImpl::hojaRutaDAOImpl() {}
 
 void hojaRutaDAOImpl::insertar(hojaRuta obj) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "INSERT INTO hojaRuta (idVehiculo, idPedido, ordenEntrega, idEmpleado) VALUES ("
@@ -19,7 +19,7 @@ void hojaRutaDAOImpl::insertar(hojaRuta obj) {
 }
 
 void hojaRutaDAOImpl::eliminar(hojaRuta obj) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "DELETE FROM hojaRuta WHERE id = " + to_string(obj.getIdVehiculo());
@@ -31,7 +31,7 @@ void hojaRutaDAOImpl::eliminar(hojaRuta obj) {
 
 hojaRuta hojaRutaDAOImpl::buscarPorId(int id) {
     hojaRuta obj;
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     if (!con.conectar()) return obj;
     sqlite3_stmt *stmt;
     string sql = "SELECT * FROM hojaRuta WHERE id = " + to_string(id);
@@ -49,7 +49,7 @@ hojaRuta hojaRutaDAOImpl::buscarPorId(int id) {
 
 vector<hojaRuta> hojaRutaDAOImpl::listar() {
     vector<hojaRuta> lista;
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     if (!con.conectar()) return lista;
     sqlite3_stmt *stmt;
     string sql = "SELECT * FROM hojaRuta";
@@ -68,7 +68,7 @@ vector<hojaRuta> hojaRutaDAOImpl::listar() {
 }
 
 void hojaRutaDAOImpl::actualizar(hojaRuta obj) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "UPDATE hojaRuta SET idVehiculo=" + to_string(obj.getIdVehiculo())

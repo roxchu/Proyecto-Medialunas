@@ -4,7 +4,7 @@
 ClienteDAOImpl::ClienteDAOImpl() {}
 
 void ClienteDAOImpl::insertar(Cliente obj) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "INSERT INTO clientes (nombre, CUIT, direccion, telefono, metodoPago, categoria) VALUES ('"
@@ -21,7 +21,7 @@ void ClienteDAOImpl::insertar(Cliente obj) {
 }
 
 void ClienteDAOImpl::eliminar(Cliente obj) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "DELETE FROM clientes WHERE id = " + to_string(obj.getId());
@@ -33,7 +33,7 @@ void ClienteDAOImpl::eliminar(Cliente obj) {
 
 Cliente ClienteDAOImpl::buscarPorId(int id) {
     Cliente c;
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     if (!con.conectar()) return c;
     sqlite3_stmt *stmt;
     string sql = "SELECT * FROM clientes WHERE id = " + to_string(id);
@@ -54,7 +54,7 @@ Cliente ClienteDAOImpl::buscarPorId(int id) {
 
 vector<Cliente> ClienteDAOImpl::listar() {
     vector<Cliente> lista;
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     if (!con.conectar()) return lista;
     sqlite3_stmt *stmt;
     string sql = "SELECT * FROM clientes";
@@ -76,7 +76,7 @@ vector<Cliente> ClienteDAOImpl::listar() {
 }
 
 void ClienteDAOImpl::actualizar(Cliente obj) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "UPDATE clientes SET nombre='" + obj.getNombre()

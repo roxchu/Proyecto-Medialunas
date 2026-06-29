@@ -4,7 +4,7 @@
 VehiculosDAOImpl::VehiculosDAOImpl() {}
 
 void VehiculosDAOImpl::insertar(Vehiculos obj) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "INSERT INTO vehiculos (patente, modelo, estadoMantenimiento) VALUES ('"
@@ -18,7 +18,7 @@ void VehiculosDAOImpl::insertar(Vehiculos obj) {
 }
 
 void VehiculosDAOImpl::eliminar(Vehiculos obj) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "DELETE FROM vehiculos WHERE id = " + to_string(obj.getId());
@@ -30,7 +30,7 @@ void VehiculosDAOImpl::eliminar(Vehiculos obj) {
 
 Vehiculos VehiculosDAOImpl::buscarPorId(int id) {
     Vehiculos obj;
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     if (!con.conectar()) return obj;
     sqlite3_stmt *stmt;
     string sql = "SELECT * FROM vehiculos WHERE id = " + to_string(id);
@@ -48,7 +48,7 @@ Vehiculos VehiculosDAOImpl::buscarPorId(int id) {
 
 vector<Vehiculos> VehiculosDAOImpl::listar() {
     vector<Vehiculos> lista;
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     if (!con.conectar()) return lista;
     sqlite3_stmt *stmt;
     string sql = "SELECT * FROM vehiculos";
@@ -67,7 +67,7 @@ vector<Vehiculos> VehiculosDAOImpl::listar() {
 }
 
 void VehiculosDAOImpl::actualizar(Vehiculos obj) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "UPDATE vehiculos SET patente='" + obj.getPatente()

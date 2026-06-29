@@ -3,5 +3,3 @@ web_php/database.local.php
 build/
 *.zip
 *.db
-__pycache__/
-*.pyc

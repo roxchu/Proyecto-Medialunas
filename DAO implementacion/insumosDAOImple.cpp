@@ -4,7 +4,7 @@
 InsumosDAOImpl::InsumosDAOImpl() {}
 
 void InsumosDAOImpl::insertar(Insumos obj) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "INSERT INTO insumos (nombre, cantidadActual, unidadMedida, proveedor) VALUES ('"
@@ -19,7 +19,7 @@ void InsumosDAOImpl::insertar(Insumos obj) {
 }
 
 void InsumosDAOImpl::eliminar(Insumos obj) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "DELETE FROM insumos WHERE id = " + to_string(obj.getId());
@@ -31,7 +31,7 @@ void InsumosDAOImpl::eliminar(Insumos obj) {
 
 Insumos InsumosDAOImpl::buscarPorId(int id) {
     Insumos obj;
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     if (!con.conectar()) return obj;
     sqlite3_stmt *stmt;
     string sql = "SELECT * FROM insumos WHERE id = " + to_string(id);
@@ -50,7 +50,7 @@ Insumos InsumosDAOImpl::buscarPorId(int id) {
 
 vector<Insumos> InsumosDAOImpl::listar() {
     vector<Insumos> lista;
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     if (!con.conectar()) return lista;
     sqlite3_stmt *stmt;
     string sql = "SELECT * FROM insumos";
@@ -70,7 +70,7 @@ vector<Insumos> InsumosDAOImpl::listar() {
 }
 
 void InsumosDAOImpl::actualizar(Insumos obj) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "UPDATE insumos SET nombre='" + obj.getNombre()

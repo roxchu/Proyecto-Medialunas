@@ -4,7 +4,7 @@
 DetallesPedidosDAOImpl::DetallesPedidosDAOImpl() {}
 
 void DetallesPedidosDAOImpl::insertar(DetallesPedidos obj) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "INSERT INTO detallePedido (idPedido, idVariedad, cantidad, precioUnitario) VALUES ("
@@ -19,7 +19,7 @@ void DetallesPedidosDAOImpl::insertar(DetallesPedidos obj) {
 }
 
 void DetallesPedidosDAOImpl::eliminar(DetallesPedidos obj) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "DELETE FROM detallePedido WHERE idPedido = " + to_string(obj.getIdPedido());
@@ -31,7 +31,7 @@ void DetallesPedidosDAOImpl::eliminar(DetallesPedidos obj) {
 
 DetallesPedidos DetallesPedidosDAOImpl::buscarPorId(int id) {
     DetallesPedidos obj;
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     if (!con.conectar()) return obj;
     sqlite3_stmt *stmt;
     string sql = "SELECT * FROM detallePedido WHERE idPedido = " + to_string(id);
@@ -49,7 +49,7 @@ DetallesPedidos DetallesPedidosDAOImpl::buscarPorId(int id) {
 
 vector<DetallesPedidos> DetallesPedidosDAOImpl::listar() {
     vector<DetallesPedidos> lista;
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     if (!con.conectar()) return lista;
     sqlite3_stmt *stmt;
     string sql = "SELECT * FROM detallePedido";
@@ -68,7 +68,7 @@ vector<DetallesPedidos> DetallesPedidosDAOImpl::listar() {
 }
 
 void DetallesPedidosDAOImpl::actualizar(DetallesPedidos obj) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "UPDATE detallePedido SET idVariedad=" + to_string(obj.getIdVariedad())

@@ -4,7 +4,7 @@
 UsuarioDAOImpl::UsuarioDAOImpl() {}
 
 void UsuarioDAOImpl::insertar(Usuario obj) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "INSERT INTO usuario (DNI, nombre, apellido, direccion, telefono, email, contactoEmergencia, nombreCE, idCategoria) VALUES ("
@@ -24,7 +24,7 @@ void UsuarioDAOImpl::insertar(Usuario obj) {
 }
 
 void UsuarioDAOImpl::eliminar(Usuario obj) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "DELETE FROM usuario WHERE DNI = " + to_string(obj.getDNI());
@@ -36,7 +36,7 @@ void UsuarioDAOImpl::eliminar(Usuario obj) {
 
 Usuario UsuarioDAOImpl::buscarPorId(int dni) {
     Usuario obj;
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     if (!con.conectar()) return obj;
     sqlite3_stmt *stmt;
     string sql = "SELECT * FROM usuario WHERE DNI = " + to_string(dni);
@@ -59,7 +59,7 @@ Usuario UsuarioDAOImpl::buscarPorId(int dni) {
 
 vector<Usuario> UsuarioDAOImpl::listar() {
     vector<Usuario> lista;
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     if (!con.conectar()) return lista;
     sqlite3_stmt *stmt;
     string sql = "SELECT * FROM usuario";
@@ -83,7 +83,7 @@ vector<Usuario> UsuarioDAOImpl::listar() {
 }
 
 void UsuarioDAOImpl::actualizar(Usuario obj) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "UPDATE usuario SET nombre='" + obj.getNombre()

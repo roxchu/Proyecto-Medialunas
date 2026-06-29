@@ -4,7 +4,7 @@
 stockVentaDAOImpl::stockVentaDAOImpl() {}
 
 void stockVentaDAOImpl::insertar(StockVenta obj) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "INSERT INTO stockVenta (idVariedad, stockDisponible, precioUnitario, idLote) VALUES ("
@@ -19,7 +19,7 @@ void stockVentaDAOImpl::insertar(StockVenta obj) {
 }
 
 void stockVentaDAOImpl::eliminar(StockVenta obj) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "DELETE FROM stockVenta WHERE id = " + to_string(obj.getId());
@@ -31,7 +31,7 @@ void stockVentaDAOImpl::eliminar(StockVenta obj) {
 
 StockVenta stockVentaDAOImpl::buscarPorId(int id) {
     StockVenta obj;
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     if (!con.conectar()) return obj;
     sqlite3_stmt *stmt;
     string sql = "SELECT * FROM stockVenta WHERE id = " + to_string(id);
@@ -50,7 +50,7 @@ StockVenta stockVentaDAOImpl::buscarPorId(int id) {
 
 vector<StockVenta> stockVentaDAOImpl::listar() {
     vector<StockVenta> lista;
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     if (!con.conectar()) return lista;
     sqlite3_stmt *stmt;
     string sql = "SELECT * FROM stockVenta";
@@ -70,7 +70,7 @@ vector<StockVenta> stockVentaDAOImpl::listar() {
 }
 
 void stockVentaDAOImpl::actualizar(StockVenta obj) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "UPDATE stockVenta SET idVariedad=" + to_string(obj.getIdVariedad())

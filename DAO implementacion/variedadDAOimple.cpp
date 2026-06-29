@@ -4,7 +4,7 @@
 variedadDAOImpl::variedadDAOImpl() {}
 
 void variedadDAOImpl::insertar(variedad obj) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "INSERT INTO variedad (nombreVariedad, descripcion) VALUES ('"
@@ -17,7 +17,7 @@ void variedadDAOImpl::insertar(variedad obj) {
 }
 
 void variedadDAOImpl::eliminar(variedad obj) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "DELETE FROM variedad WHERE id = " + to_string(obj.getId());
@@ -29,7 +29,7 @@ void variedadDAOImpl::eliminar(variedad obj) {
 
 variedad variedadDAOImpl::buscarPorId(int id) {
     variedad obj;
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     if (!con.conectar()) return obj;
     sqlite3_stmt *stmt;
     string sql = "SELECT * FROM variedad WHERE id = " + to_string(id);
@@ -46,7 +46,7 @@ variedad variedadDAOImpl::buscarPorId(int id) {
 
 vector<variedad> variedadDAOImpl::listar() {
     vector<variedad> lista;
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     if (!con.conectar()) return lista;
     sqlite3_stmt *stmt;
     string sql = "SELECT * FROM variedad";
@@ -64,7 +64,7 @@ vector<variedad> variedadDAOImpl::listar() {
 }
 
 void variedadDAOImpl::actualizar(variedad obj) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "UPDATE variedad SET nombreVariedad='" + obj.getNombreVariedad()

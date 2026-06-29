@@ -4,7 +4,7 @@
 recetasDAOImpl::recetasDAOImpl() {}
 
 void recetasDAOImpl::insertar(Receta obj) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "INSERT INTO receta (nombreProducto, insumosNecesarios, cantidadEsperada, procedimiento) VALUES ('"
@@ -19,7 +19,7 @@ void recetasDAOImpl::insertar(Receta obj) {
 }
 
 void recetasDAOImpl::eliminar(Receta obj) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "DELETE FROM receta WHERE id = " + to_string(obj.getId());
@@ -31,7 +31,7 @@ void recetasDAOImpl::eliminar(Receta obj) {
 
 Receta recetasDAOImpl::buscarPorId(int id) {
     Receta obj;
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     if (!con.conectar()) return obj;
     sqlite3_stmt *stmt;
     string sql = "SELECT * FROM receta WHERE id = " + to_string(id);
@@ -50,7 +50,7 @@ Receta recetasDAOImpl::buscarPorId(int id) {
 
 vector<Receta> recetasDAOImpl::listar() {
     vector<Receta> lista;
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     if (!con.conectar()) return lista;
     sqlite3_stmt *stmt;
     string sql = "SELECT * FROM receta";
@@ -70,7 +70,7 @@ vector<Receta> recetasDAOImpl::listar() {
 }
 
 void recetasDAOImpl::actualizar(Receta obj) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "UPDATE receta SET nombreProducto='" + obj.getNombreProducto()

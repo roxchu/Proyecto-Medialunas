@@ -4,7 +4,7 @@
 loteInsumosDAOImpl::loteInsumosDAOImpl() {}
 
 void loteInsumosDAOImpl::insertar(loteInsumos obj) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "INSERT INTO loteInsumos (idLoteProduccion, idInsumo, cantidad, unidadMedida, observaciones, costoUnitario) VALUES ("
@@ -21,7 +21,7 @@ void loteInsumosDAOImpl::insertar(loteInsumos obj) {
 }
 
 void loteInsumosDAOImpl::eliminar(loteInsumos obj) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "DELETE FROM loteInsumos WHERE id = " + to_string(obj.getId());
@@ -33,7 +33,7 @@ void loteInsumosDAOImpl::eliminar(loteInsumos obj) {
 
 loteInsumos loteInsumosDAOImpl::buscarPorId(int id) {
     loteInsumos obj;
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     if (!con.conectar()) return obj;
     sqlite3_stmt *stmt;
     string sql = "SELECT * FROM loteInsumos WHERE id = " + to_string(id);
@@ -54,7 +54,7 @@ loteInsumos loteInsumosDAOImpl::buscarPorId(int id) {
 
 vector<loteInsumos> loteInsumosDAOImpl::listar() {
     vector<loteInsumos> lista;
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     if (!con.conectar()) return lista;
     sqlite3_stmt *stmt;
     string sql = "SELECT * FROM loteInsumos";
@@ -76,7 +76,7 @@ vector<loteInsumos> loteInsumosDAOImpl::listar() {
 }
 
 void loteInsumosDAOImpl::actualizar(loteInsumos obj) {
-    Conexion con("medialunas.db");
+    Conexion con("medialunas_pro");
     con.conectar();
     sqlite3_stmt *stmt;
     string sql = "UPDATE loteInsumos SET idLoteProduccion=" + to_string(obj.getIdLoteProduccion())
