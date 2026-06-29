@@ -104,7 +104,12 @@ static string aplicarParametros(sqlite3_stmt* stmt) {
         char c = sql[i];
         if (c == '\'' && (i == 0 || sql[i - 1] != '\\')) enComilla = !enComilla;
         if (c == '?' && !enComilla && parametro < (int)stmt->parametros.size()) {
-            armado += escapar(stmt->db, stmt->parametros[parametro++]);
+            if (parametro < (int)stmt->parametrosNull.size() && stmt->parametrosNull[parametro]) {
+                armado += "NULL";
+                parametro++;
+            } else {
+                armado += escapar(stmt->db, stmt->parametros[parametro++]);
+            }
         } else {
             armado += c;
         }
@@ -164,14 +169,25 @@ int sqlite3_close(sqlite3* db) {
 
 int sqlite3_prepare_v2(sqlite3* db, const char* sql, int, sqlite3_stmt** stmt, const char**) {
     if (!db || !db->mysql || !sql) return SQLITE_ERROR;
-    *stmt = new sqlite3_stmt{db, sql, {}, {}, {}, 0, false, false, ""};
+    *stmt = new sqlite3_stmt{db, sql, {}, {}, {}, {}, 0, false, false, ""};
     return SQLITE_OK;
 }
 
 int sqlite3_bind_text(sqlite3_stmt* stmt, int posicion, const char* valor, int, void*) {
     if (!stmt || posicion <= 0) return SQLITE_ERROR;
     if ((int)stmt->parametros.size() < posicion) stmt->parametros.resize(posicion);
+    if ((int)stmt->parametrosNull.size() < posicion) stmt->parametrosNull.resize(posicion, false);
     stmt->parametros[posicion - 1] = valor ? valor : "";
+    stmt->parametrosNull[posicion - 1] = false;
+    return SQLITE_OK;
+}
+
+int sqlite3_bind_null(sqlite3_stmt* stmt, int posicion) {
+    if (!stmt || posicion <= 0) return SQLITE_ERROR;
+    if ((int)stmt->parametros.size() < posicion) stmt->parametros.resize(posicion);
+    if ((int)stmt->parametrosNull.size() < posicion) stmt->parametrosNull.resize(posicion, false);
+    stmt->parametros[posicion - 1] = "";
+    stmt->parametrosNull[posicion - 1] = true;
     return SQLITE_OK;
 }
 

@@ -51,19 +51,21 @@ public:
     }
 
     void procesar(Vector2 mouse, bool editable = true) {
-        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-            activo = editable && CheckCollisionPointRec(mouse, area);
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+        activo = editable && CheckCollisionPointRec(mouse, area);
+    }
+
+    if (!activo || !editable) return;
+
+    int tecla = GetCharPressed();
+    while (tecla > 0) {
+        if (tecla >= 32 && tecla <= 126 && (int)valor.size() < maximo) {
+            valor += (char)tecla;
         }
+        tecla = GetCharPressed();
+    }
 
-        if (!activo || !editable) return;
-
-        int tecla = GetCharPressed();
-        while (tecla > 0) {
-            if (tecla >= 32 && tecla <= 126 && (int)valor.size() < maximo) valor += (char)tecla;
-            tecla = GetCharPressed();
-        }
-
-        if (IsKeyPressed(KEY_BACKSPACE) && !valor.empty()) valor.pop_back();
+    if (IsKeyPressed(KEY_BACKSPACE) && !valor.empty()) valor.pop_back();
     }
 
     void dibujar(Color borde, Color texto, bool ocultar = false, bool editable = true) {
@@ -188,24 +190,23 @@ public:
 
 private:
     void configurarTablas() {
-        tablas = {
-            {"Clientes web", "clientes", "Ventas", {{"id", "ID", true, true, false}, {"nombre", "Nombre", false, false, false}, {"CUIT", "CUIT", false, false, false}, {"direccion", "Direccion", false, false, false}, {"telefono", "Telefono", false, false, false}, {"metodoPago", "Metodo pago", false, false, false}, {"categoria", "Categoria", false, false, false}}},
-            {"Pedidos web", "pedidos", "Ventas", {{"id", "ID pedido", true, true, false}, {"idCliente", "ID cliente", false, false, false}, {"fechaPedido", "Fecha", false, false, false}, {"estado", "Estado", false, false, false}}},
-            {"Detalle pedidos", "detallePedido", "Ventas", {{"idPedido", "ID pedido", true, false, false}, {"idVariedad", "ID variedad", true, false, false}, {"cantidad", "Cantidad", false, false, false}, {"precioUnitario", "Precio", false, false, false}}},
-            {"Facturacion", "facturacion", "Ventas", {{"direccion", "Direccion", false, false, false}, {"idPedido", "ID pedido", true, false, false}, {"idCliente", "ID cliente", false, false, false}, {"fechaPedido", "Fecha", false, false, false}, {"idVariedad", "ID variedad", true, false, false}, {"cantidad", "Cantidad", false, false, false}, {"precioUnitario", "Precio", false, false, false}, {"metodoPago", "Metodo pago", false, false, false}}},
-            {"Variedades", "variedad", "Produccion", {{"id", "ID", true, true, false}, {"nombreVariedad", "Nombre", false, false, false}, {"descripcion", "Descripcion", false, false, false}}},
-            {"Stock publico", "stockVenta", "Ventas", {{"idVariedad", "ID variedad", true, false, false}, {"variedad", "Variedad", false, false, false}, {"stockDisponible", "Stock publico", false, false, false}, {"precioUnitario", "Precio", false, false, false}}},
-            {"Insumos", "insumos", "Produccion", {{"id", "ID", true, true, false}, {"nombre", "Nombre", false, false, false}, {"cantidadActual", "Cantidad", false, false, false}, {"stockMinimo", "Minimo", false, false, false}, {"proveedor", "Proveedor", false, false, false}}},
-            {"Lotes insumos", "loteInsumos", "Produccion", {{"id", "ID", true, true, false}, {"idLoteProduccion", "ID lote prod.", false, false, false}, {"idInsumo", "ID insumo", false, false, false}, {"cantidad", "Cantidad", false, false, false}, {"stockMinimo", "Minimo", false, false, false}, {"observaciones", "Observaciones", false, false, false}, {"costoUnitario", "Costo unit.", false, false, false}}},
-            {"Recetas", "receta", "Produccion", {{"id", "ID", true, true, false}, {"nombreProducto", "Producto", false, false, false}, {"cantidadEsperada", "Cant. esperada", false, false, false}, {"procedimiento", "Procedimiento", false, false, false}}},
-            {"Insumos por receta", "recetaInsumos", "Produccion", {{"idReceta", "ID receta", true, false, false}, {"idInsumo", "ID insumo", true, false, false}, {"cantidad", "Cantidad", false, false, false}}},
-            {"Lotes produccion", "lotesProduccion", "Produccion", {{"id", "ID", true, true, false}, {"fecha", "Fecha", false, false, false}, {"idVariedad", "ID variedad", false, false, false}, {"cantidadProducida", "Cantidad prod.", false, false, false}, {"idEmpleado", "DNI empleado", false, false, false}, {"idReceta", "ID receta", false, false, false}}},
-            {"Vehiculos", "vehiculos", "Logistica", {{"id", "ID", true, true, false}, {"patente", "Patente", false, false, false}, {"modelo", "Modelo", false, false, false}, {"estadoMantenimiento", "Mantenimiento", false, false, false}}},
-            {"Hoja de ruta", "hojaRuta", "Logistica", {{"id", "ID", true, true, false}, {"idVehiculo", "ID vehiculo", false, false, false}, {"idPedido", "ID pedido", false, false, false}, {"ordenEntrega", "Orden", false, false, false}, {"idEmpleado", "DNI empleado", false, false, false}}},
-            {"Usuarios", "usuario", "Admin", {{"DNI", "DNI", true, false, false}, {"nombre", "Nombre", false, false, false}, {"apellido", "Apellido", false, false, false}, {"direccion", "Direccion", false, false, false}, {"telefono", "Telefono", false, false, false}, {"email", "Email", false, false, false}, {"contactoEmergencia", "Tel. emergencia", false, false, false}, {"nombreCE", "Contacto emergencia", false, false, false}, {"idCategoria", "ID categoria", false, false, false}, {"sector", "Sector", false, false, false}, {"cuenta", "Usuario", false, false, false}, {"clave", "Contrasena", false, false, true}}},
-            {"Categorias usuario", "categoriaUsuario", "Admin", {{"id", "ID", true, true, false}, {"nombreCategoria", "Nombre categoria", false, false, false}}}
-        };
-    }
+    tablas = {
+        {"Clientes web", "clientes", "Ventas", {{"id", "ID", true, true, false}, {"nombre", "Nombre", false, false, false}, {"CUIT", "CUIT", false, false, false}, {"direccion", "Direccion", false, false, false}, {"telefono", "Telefono", false, false, false}, {"metodoPago", "Metodo pago", false, false, false}, {"categoria", "Categoria", false, false, false}}},
+        {"Pedidos web", "pedidos", "Comun", {{"id", "ID pedido", true, true, false}, {"idCliente", "ID cliente", false, false, false}, {"fechaPedido", "Fecha", false, false, false}, {"estado", "Estado (Pendiente/Entregado)", false, false, false}}},        {"Detalle pedidos", "detallePedido", "Ventas", {{"idPedido", "ID pedido", true, false, false}, {"idVariedad", "ID variedad", true, false, false}, {"cantidad", "Cantidad (docenas)", false, false, false}, {"precioUnitario", "Precio x unidad ($)", false, false, false}}},
+        {"Facturacion", "facturacion", "Ventas", {{"direccion", "Direccion", false, false, false}, {"idPedido", "ID pedido", true, false, false}, {"idCliente", "ID cliente", false, false, false}, {"fecha", "Fecha", false, false, false}, {"idVariedad", "ID variedad", false, false, false}, {"cantidad", "Cantidad (docenas)", false, false, false}, {"precio", "Precio x unidad ($)", false, false, false}, {"metodoPago", "Metodo pago", false, false, false}}},
+        {"Variedades", "variedad", "Produccion", {{"id", "ID", true, true, false}, {"nombreVariedad", "Nombre", false, false, false}, {"descripcion", "Descripcion", false, false, false}}},
+        {"Stock publico", "stockVenta", "Ventas", {{"idVariedad", "ID variedad", true, false, false}, {"variedad", "Variedad", false, false, false}, {"stockDisponible", "Stock (unidades)", false, false, false}, {"precioUnitario", "Precio x docena ($)", false, false, false}}},
+        {"Insumos", "insumos", "Produccion", {{"id", "ID", true, true, false}, {"nombre", "Nombre", false, false, false}, {"cantidadActual", "Cantidad actual", false, false, false}, {"unidadMedida", "Unidad (kg/l/etc)", false, false, false}, {"proveedor", "Proveedor", false, false, false}, {"stockMinimo", "Stock minimo", false, false, false}}},
+        {"Detalles de produccion", "loteInsumos", "Produccion", {{"id", "ID", true, true, false}, {"idLoteProduccion", "ID lote prod.", false, false, false}, {"idReceta", "ID receta", false, false, false}, {"costoUnitario", "Costo x unidad", false, false, false}, {"observaciones", "Observaciones", false, false, false}}},
+        {"Recetas", "receta", "Produccion", {{"id", "ID", true, true, false}, {"nombreProducto", "Producto", false, false, false}, {"cantidadEsperada", "Cant. esperada (unidades)", false, false, false}, {"procedimiento", "Procedimiento", false, false, false}}},
+        {"Insumos por receta", "recetaInsumos", "Produccion", {{"idReceta", "ID receta", true, false, false}, {"idInsumo", "ID insumo", true, false, false}, {"cantidad", "Cantidad requerida", false, false, false}}},
+        {"Lotes produccion", "lotesProduccion", "Produccion", {{"id", "ID", true, true, false}, {"fecha", "Fecha", false, false, false}, {"idVariedad", "ID variedad", false, false, false}, {"cantidadProducida", "Cantidad producida (unidades)", false, false, false}, {"idEmpleado", "ID empleado", false, false, false}, {"idReceta", "ID receta", false, false, false}}},
+        {"Vehiculos", "vehiculos", "Logistica", {{"id", "ID", true, true, false}, {"patente", "Patente", false, false, false}, {"modelo", "Modelo", false, false, false}, {"estadoMantenimiento", "Estado mantenimiento", false, false, false}}},
+        {"Hoja de ruta", "hojaRuta", "Logistica", {{"id", "ID", true, true, false}, {"idVehiculo", "ID vehiculo", false, false, false}, {"idPedido", "ID pedido", false, false, false}, {"ordenEntrega", "Orden entrega", false, false, false}, {"idEmpleado", "ID empleado", false, false, false}}},
+        {"Usuarios", "usuario", "Admin", {{"DNI", "DNI", true, false, false}, {"nombre", "Nombre", false, false, false}, {"apellido", "Apellido", false, false, false}, {"direccion", "Direccion", false, false, false}, {"telefono", "Telefono", false, false, false}, {"email", "Email", false, false, false}, {"idCategoria", "Categoria (1=Duenio, 2=Admin, 3=Empleado)", false, false, false}, {"sector", "Sector (Ventas/Produccion/Logistica)", false, false, false}, {"cuenta", "Usuario", false, false, false}, {"clave", "Contrasena", false, false, true}}},
+        {"Categorias usuario", "categoriaUsuario", "Admin", {{"id", "ID", true, true, false}, {"nombreCategoria", "Nombre categoria", false, false, false}}}
+    };
+ }
 
     bool esDuenio() { return usuarioCategoria == 1; }
     bool esAdmin() { return usuarioCategoria == 2; }
@@ -232,17 +233,24 @@ private:
 
     bool puedeCrear() {
         string tabla = tablas[tablaActual].tabla;
-        if (tabla == "facturacion" || tabla == "stockVenta" || tabla == "clientes" || tabla == "pedidos") return false;
+        if (tabla == "facturacion" || tabla == "clientes" || tabla == "pedidos") return false;
+        if (tabla == "stockVenta") return esDuenio() || esAdmin() || 
+                                        (esEmpleado() && usuarioSector == "Produccion");
         if (tabla == "variedad" || tabla == "usuario" || tabla == "categoriaUsuario") return esDuenio() || esAdmin();
         if (esDuenio() || esAdmin()) return true;
         return esEmpleado() && puedeVerPanel(tablaActual);
-    }
+   }
 
     bool puedeActualizar() {
         string tabla = tablas[tablaActual].tabla;
-        if (tabla == "facturacion" || tabla == "stockVenta" || tabla == "clientes") return false;
+        if (tabla == "facturacion" || tabla == "clientes") return false;
+        if (tabla == "stockVenta") return esDuenio() || esAdmin() || 
+                                        (esEmpleado() && usuarioSector == "Produccion");
         if (tabla == "variedad" || tabla == "usuario" || tabla == "categoriaUsuario") return esDuenio() || esAdmin();
-        if (tabla == "pedidos") return esDuenio() || esAdmin() || (esEmpleado() && usuarioSector == "Ventas");
+        // Permitir actualizar pedidos a Admin, Dueño, Ventas y Logistica
+        if (tabla == "pedidos") return esDuenio() || esAdmin() || 
+                                    (esEmpleado() && (usuarioSector == "Ventas" || usuarioSector == "Logistica"));
+        // Por defecto: Admin y Dueño siempre pueden, empleados si tienen acceso al panel
         if (esDuenio() || esAdmin()) return true;
         return esEmpleado() && puedeVerPanel(tablaActual);
     }
@@ -325,7 +333,8 @@ private:
         Boton nuevo("Crear", {220, 292, 115, 38});
         Boton guardar(claveSeleccionada.empty() ? "Guardar" : "Actualizar", {350, 292, 125, 38});
         Boton eliminar("Borrar", {490, 292, 125, 38});
-        Boton salir("Cerrar sesion", {1035, 24, 135, 34});
+        Boton salir("Cerrar sesion", {1035, 292, 135, 38});
+        
         if (nuevo.presionado(mouse)) {
             if (puedeCrear()) limpiarFormulario();
             else mensaje = "No tenes permiso para crear en este panel";
@@ -358,21 +367,41 @@ private:
     void configurarFormulario() {
         formulario.clear();
         const ConfigTabla& config = tablas[tablaActual];
-        int columnas = config.tabla == "usuario" ? 3 : 4;
-        float ancho = config.tabla == "usuario" ? 280.0f : 210.0f;
-        float pasoX = config.tabla == "usuario" ? 310.0f : 232.0f;
+        
+        // Especial para usuarios: 2 columnas grandes
+        // Para otros: 4 columnas normales
+        int columnas = (config.tabla == "usuario") ? 2 : 4;
+        float ancho = (config.tabla == "usuario") ? 380.0f : 210.0f;
+        float pasoX = (config.tabla == "usuario") ? 410.0f : 232.0f;
+        
         for (int i = 0; i < (int)config.campos.size(); i++) {
             int col = i % columnas;
             int fila = i / columnas;
             formulario.push_back(CampoTexto(config.campos[i].etiqueta, {220.0f + col * pasoX, 105.0f + fila * 62.0f, ancho, 34}, 90));
         }
         claveSeleccionada.clear();
-    }
+    } 
 
     bool campoEditable(const CampoTabla& campo) {
         string tabla = tablas[tablaActual].tabla;
-        if (tabla == "facturacion" || tabla == "stockVenta" || tabla == "clientes") return false;
-        if (tabla == "pedidos") return !claveSeleccionada.empty() && campo.columna == "estado" && puedeActualizar();
+        if (tabla == "facturacion" || tabla == "clientes") return false;
+        
+        // Permitir editar precioUnitario y stockDisponible en stockVenta
+        if (tabla == "stockVenta") {
+            if (campo.columna == "precioUnitario" || campo.columna == "stockDisponible") {
+                return esDuenio() || esAdmin() || 
+                    (esEmpleado() && usuarioSector == "Produccion");
+            }
+            return false;
+        }
+        
+        // Permitir editar SOLO estado en pedidos para Ventas y Logistica
+        if (tabla == "pedidos") {
+            return !claveSeleccionada.empty() && campo.columna == "estado" &&
+                (esDuenio() || esAdmin() || 
+                    (esEmpleado() && (usuarioSector == "Ventas" || usuarioSector == "Logistica")));
+        }
+        
         if (claveSeleccionada.empty() && !puedeCrear()) return false;
         if (!claveSeleccionada.empty() && !puedeActualizar()) return false;
         if (claveSeleccionada.empty()) return !campo.autoIncremental;
@@ -441,7 +470,7 @@ private:
         if (config.tabla == "stockVenta") {
             return "SELECT sv.idVariedad, v.nombreVariedad, "
                    "COALESCE((SELECT SUM(lp.cantidadProducida) FROM lotesProduccion lp WHERE lp.idVariedad = sv.idVariedad), 0) - "
-                   "COALESCE((SELECT SUM(dp.cantidad) FROM detallePedido dp WHERE dp.idVariedad = sv.idVariedad), 0), "
+                   "COALESCE((SELECT SUM(dp.cantidad * 12) FROM detallePedido dp WHERE dp.idVariedad = sv.idVariedad), 0), "
                    "sv.precioUnitario "
                    "FROM stockVenta sv "
                    "LEFT JOIN variedad v ON v.id = sv.idVariedad "
@@ -466,39 +495,54 @@ private:
     }
 
     bool validarReglasDelPanel() {
-        const ConfigTabla& config = tablas[tablaActual];
-        for (int i = 0; i < (int)config.campos.size(); i++) {
-            string valor = trim(formulario[i].getValor());
-            if (!valor.empty() && esCampoNumerico(config.campos[i].columna) && !esNumero(valor)) {
+    const ConfigTabla& config = tablas[tablaActual];
+    for (int i = 0; i < (int)config.campos.size(); i++) {
+        string valor = trim(formulario[i].getValor());
+        
+        // Validar tipos según el campo
+        if (!valor.empty()) {
+            string columna = config.campos[i].columna;
+            
+            // Validar fechas (formato dd/mm/yyyy)
+            if (columna == "fecha" || columna == "fechaPedido") {
+                if (!esFechaValida(valor)) {
+                    mensaje = "Fecha inválida. Use formato dd/mm/yyyy";
+                    return false;
+                }
+            }
+            // Validar números
+            else if (esCampoNumerico(columna) && !esNumero(valor)) {
                 mensaje = config.campos[i].etiqueta + " debe ser numerico";
                 return false;
             }
-            if (valor.empty() && config.campos[i].clave && !config.campos[i].autoIncremental) {
-                mensaje = "Complete " + config.campos[i].etiqueta;
-                return false;
-            }
         }
-
-        if (!validarRelaciones(config)) return false;
-
-        if (config.tabla != "usuario") return true;
-
-        int indiceCategoria = indiceCampo("idCategoria");
-        int categoriaNueva = indiceCategoria >= 0 ? atoi(formulario[indiceCategoria].getValor().c_str()) : 3;
-        int categoriaActual = categoriaSeleccionadaUsuario();
-
-        if (esAdmin()) {
-            if (categoriaNueva == 1) {
-                mensaje = "Un admin no puede asignar rol Duenio";
-                return false;
-            }
-            if (!claveSeleccionada.empty() && categoriaActual != 3) {
-                mensaje = "Un admin solo puede cambiar usuarios empleados";
-                return false;
-            }
+        
+        if (valor.empty() && config.campos[i].clave && !config.campos[i].autoIncremental) {
+            mensaje = "Complete " + config.campos[i].etiqueta;
+            return false;
         }
+    }
 
-        return true;
+    if (!validarRelaciones(config)) return false;
+
+    if (config.tabla != "usuario") return true;
+
+    int indiceCategoria = indiceCampo("idCategoria");
+    int categoriaNueva = indiceCategoria >= 0 ? atoi(formulario[indiceCategoria].getValor().c_str()) : 3;
+    int categoriaActual = categoriaSeleccionadaUsuario();
+
+    if (esAdmin()) {
+        if (categoriaNueva == 1) {
+            mensaje = "Un admin no puede asignar rol Duenio";
+            return false;
+        }
+        if (!claveSeleccionada.empty() && categoriaActual != 3) {
+            mensaje = "Un admin solo puede cambiar usuarios empleados";
+            return false;
+        }
+    }
+
+    return true;
     }
 
     bool validarRelaciones(const ConfigTabla& config) {
@@ -506,7 +550,7 @@ private:
         if (!validarRelacion(config, "idCliente", "clientes", "id", "cliente")) return false;
         if (!validarRelacion(config, "idVariedad", "variedad", "id", "variedad")) return false;
         if (!validarRelacion(config, "idInsumo", "insumos", "id", "insumo")) return false;
-        if (!validarRelacion(config, "idReceta", "receta", "id", "receta")) return false;
+        if (!validarRelacion(config, "idReceta", "receta", "id", "receta")) return false;  // ✅ ESTA LÍNEA YA ESTABA
         if (!validarRelacion(config, "idLote", "lotesProduccion", "id", "lote de produccion")) return false;
         if (!validarRelacion(config, "idLoteProduccion", "lotesProduccion", "id", "lote de produccion")) return false;
         if (!validarRelacion(config, "idVehiculo", "vehiculos", "id", "vehiculo")) return false;
@@ -567,14 +611,36 @@ private:
         return digito;
     }
 
+    bool esFechaValida(const string& fecha) {
+        if (fecha.size() != 10) return false;
+        if (fecha[2] != '/' || fecha[5] != '/') return false;
+        
+        string dia = fecha.substr(0, 2);
+        string mes = fecha.substr(3, 2);
+        string anio = fecha.substr(6, 4);
+        
+        // Verificar que sean números
+        for (char c : dia) if (!isdigit(c)) return false;
+        for (char c : mes) if (!isdigit(c)) return false;
+        for (char c : anio) if (!isdigit(c)) return false;
+        
+        int d = atoi(dia.c_str());
+        int m = atoi(mes.c_str());
+        int a = atoi(anio.c_str());
+        
+        if (m < 1 || m > 12) return false;
+        if (d < 1 || d > 31) return false;
+        if (a < 1900 || a > 2100) return false;
+        
+        return true;
+    }
+
     bool esCampoNumerico(const string& columna) {
-        return columna == "DNI" || columna == "id" || columna == "idCliente" || columna == "idPedido" ||
-               columna == "idVariedad" || columna == "idInsumo" || columna == "idReceta" ||
-               columna == "idLote" || columna == "idLoteProduccion" || columna == "idVehiculo" ||
-               columna == "idEmpleado" || columna == "idCategoria" || columna == "cantidad" ||
-               columna == "cantidadActual" || columna == "cantidadEsperada" || columna == "cantidadProducida" ||
-               columna == "precioUnitario" || columna == "stockDisponible" || columna == "stockMinimo" ||
-               columna == "costoUnitario" || columna == "ordenEntrega";
+    return columna == "DNI" || columna == "id" || columna == "idCliente" || columna == "idPedido" ||
+           columna == "idVariedad" || columna == "idInsumo" || columna == "idReceta" ||
+           columna == "idLote" || columna == "idLoteProduccion" || columna == "idVehiculo" ||
+           columna == "idEmpleado" || columna == "idCategoria" ||
+           columna == "precioUnitario" || columna == "costoUnitario" || columna == "ordenEntrega";
     }
 
     bool aceptaNull(const string& columna) {
@@ -629,6 +695,10 @@ private:
         if (sqlite3_prepare_v2(con.getDB(), sql.c_str(), -1, &stmt, NULL) == SQLITE_OK) {
             for (int i = 0; i < (int)indices.size(); i++) bindValor(stmt, i + 1, config.campos[indices[i]], formulario[indices[i]].getValor());
             if (sqlite3_step(stmt) == SQLITE_DONE) {
+                // NUEVO: Si es un lote de producción, crear stock automáticamente
+                if (config.tabla == "lotesProduccion") {
+                    crearStockAutomatico(con.getDB());
+                }
                 limpiarFormulario();
                 mensaje = "Registro guardado";
             } else {
@@ -641,6 +711,63 @@ private:
         con.cerrar();
     }
 
+    void crearStockAutomatico(sqlite3* db) {
+        // Obtener el último lote creado
+        string sqlUltimoLote = "SELECT id, idVariedad, cantidadProducida FROM lotesProduccion ORDER BY id DESC LIMIT 1";
+        sqlite3_stmt* stmtLote = nullptr;
+        
+        int idLote = 0;
+        int idVariedad = 0;
+        string cantidad = "0";
+        
+        if (sqlite3_prepare_v2(db, sqlUltimoLote.c_str(), -1, &stmtLote, NULL) == SQLITE_OK) {
+            if (sqlite3_step(stmtLote) == SQLITE_ROW) {
+                idLote = sqlite3_column_int(stmtLote, 0);
+                idVariedad = sqlite3_column_int(stmtLote, 1);
+                const unsigned char* cant = sqlite3_column_text(stmtLote, 2);
+                cantidad = cant ? (const char*)cant : "0";
+            }
+        }
+        sqlite3_finalize(stmtLote);
+        
+        if (idLote == 0 || idVariedad == 0) return;
+        
+        // Verificar si ya existe stock para esta variedad
+        string sqlExiste = "SELECT id FROM stockVenta WHERE idVariedad = ?";
+        sqlite3_stmt* stmtExiste = nullptr;
+        bool yaExiste = false;
+        
+        if (sqlite3_prepare_v2(db, sqlExiste.c_str(), -1, &stmtExiste, NULL) == SQLITE_OK) {
+            bindTexto(stmtExiste, 1, to_string(idVariedad));
+            yaExiste = sqlite3_step(stmtExiste) == SQLITE_ROW;
+        }
+        sqlite3_finalize(stmtExiste);
+        
+        if (yaExiste) {
+            // Si ya existe, solo actualizar cantidad y lote
+            string sqlUpdate = "UPDATE stockVenta SET stockDisponible = ?, idLote = ? WHERE idVariedad = ?";
+            sqlite3_stmt* stmtUpdate = nullptr;
+            if (sqlite3_prepare_v2(db, sqlUpdate.c_str(), -1, &stmtUpdate, NULL) == SQLITE_OK) {
+                bindTexto(stmtUpdate, 1, cantidad);
+                bindTexto(stmtUpdate, 2, to_string(idLote));
+                bindTexto(stmtUpdate, 3, to_string(idVariedad));
+                sqlite3_step(stmtUpdate);
+            }
+            sqlite3_finalize(stmtUpdate);
+        } else {
+            // Si no existe, crear nuevo registro con precio inicial en 0
+            string sqlInsert = "INSERT INTO stockVenta (idVariedad, stockDisponible, precioUnitario, idLote) VALUES (?, ?, 0, ?)";
+            sqlite3_stmt* stmtInsert = nullptr;
+            if (sqlite3_prepare_v2(db, sqlInsert.c_str(), -1, &stmtInsert, NULL) == SQLITE_OK) {
+                bindTexto(stmtInsert, 1, to_string(idVariedad));
+                bindTexto(stmtInsert, 2, cantidad);
+                bindTexto(stmtInsert, 3, to_string(idLote));
+                sqlite3_step(stmtInsert);
+            }
+            sqlite3_finalize(stmtInsert);
+        } 
+    }
+
     void actualizarRegistro() {
         Conexion con("medialunas_pro");
         if (!con.conectar()) {
@@ -650,9 +777,13 @@ private:
         const ConfigTabla& config = tablas[tablaActual];
         vector<int> editables;
         vector<int> claves;
+        
         for (int i = 0; i < (int)config.campos.size(); i++) {
-            if (config.campos[i].clave) claves.push_back(i);
-            else editables.push_back(i);
+            if (config.campos[i].clave) {
+                claves.push_back(i);
+            } else if (config.campos[i].columna != "variedad") {  // Excluir campos que vienen de JOINs
+                editables.push_back(i);
+            }
         }
 
         string sql = "UPDATE " + config.tabla + " SET ";
@@ -665,8 +796,12 @@ private:
         sqlite3_stmt* stmt = nullptr;
         if (sqlite3_prepare_v2(con.getDB(), sql.c_str(), -1, &stmt, NULL) == SQLITE_OK) {
             int pos = 1;
-            for (int indice : editables) bindValor(stmt, pos++, config.campos[indice], formulario[indice].getValor());
-            for (string clave : claveSeleccionada) bindTexto(stmt, pos++, clave);
+            for (int indice : editables) {
+                bindValor(stmt, pos++, config.campos[indice], formulario[indice].getValor());
+            }
+            for (string clave : claveSeleccionada) {
+                bindTexto(stmt, pos++, clave);
+            }
             if (sqlite3_step(stmt) == SQLITE_DONE) {
                 limpiarFormulario();
                 mensaje = "Registro actualizado";
@@ -679,7 +814,6 @@ private:
         sqlite3_finalize(stmt);
         con.cerrar();
     }
-
     void eliminarRegistro() {
         if (claveSeleccionada.empty()) {
             mensaje = "Seleccione un registro para eliminar";
@@ -711,6 +845,40 @@ private:
         cargarDatos();
     }
 
+    void cargarRegistroSeleccionado() {
+    Conexion con("medialunas_pro");
+    if (!con.conectar()) return;
+    const ConfigTabla& config = tablas[tablaActual];
+    string sql = "SELECT * FROM " + config.tabla;
+    if (config.tabla == "stockVenta") sql = "SELECT s.*, v.nombreVariedad as variedad FROM stockVenta s LEFT JOIN variedad v ON s.idVariedad = v.id";
+    sql += " WHERE " + condicionClaves(config);
+
+    sqlite3_stmt* stmt = nullptr;
+    if (sqlite3_prepare_v2(con.getDB(), sql.c_str(), -1, &stmt, NULL) == SQLITE_OK) {
+        if (sqlite3_step(stmt) == SQLITE_ROW) {
+            for (int i = 0; i < (int)config.campos.size(); i++) {
+                string valor;
+                int col = sqlite3_column_index(stmt, config.campos[i].columna.c_str());
+                if (col >= 0 && sqlite3_column_text(stmt, col)) {
+                    valor = (const char*)sqlite3_column_text(stmt, col);
+                    
+                    // NUEVO: Convertir fecha de yyyy-mm-dd a dd/mm/yyyy
+                    if ((config.campos[i].columna == "fecha" || config.campos[i].columna == "fechaPedido") 
+                        && valor.size() == 10 && valor[4] == '-' && valor[7] == '-') {
+                        string anio = valor.substr(0, 4);
+                        string mes = valor.substr(5, 2);
+                        string dia = valor.substr(8, 2);
+                        valor = dia + "/" + mes + "/" + anio;
+                    }
+                }
+                formulario[i].setValor(valor);
+            }
+        }
+    }
+    sqlite3_finalize(stmt);
+    con.cerrar();
+    }
+
     string condicionClaves(const ConfigTabla& config) {
         string condicion = "";
         int pos = 0;
@@ -728,12 +896,23 @@ private:
     }
 
     void bindValor(sqlite3_stmt* stmt, int posicion, const CampoTabla& campo, const string& valor) {
-        string limpio = trim(valor);
-        if (limpio.empty() && aceptaNull(campo.columna)) {
-            sqlite3_bind_null(stmt, posicion);
-            return;
+    string limpio = trim(valor);
+    
+    // Convertir fecha dd/mm/yyyy a yyyy-mm-dd para MySQL
+    if ((campo.columna == "fecha" || campo.columna == "fechaPedido") && !limpio.empty()) {
+        if (limpio.size() == 10 && limpio[2] == '/' && limpio[5] == '/') {
+            string dia = limpio.substr(0, 2);
+            string mes = limpio.substr(3, 2);
+            string anio = limpio.substr(6, 4);
+            limpio = anio + "-" + mes + "-" + dia;
         }
-        sqlite3_bind_text(stmt, posicion, limpio.c_str(), -1, SQLITE_TRANSIENT);
+    }
+    
+    if (limpio.empty() && aceptaNull(campo.columna)) {
+        sqlite3_bind_null(stmt, posicion);
+        return;
+    }
+    sqlite3_bind_text(stmt, posicion, limpio.c_str(), -1, SQLITE_TRANSIENT);
     }
 
     void iniciarSesion() {
@@ -954,8 +1133,8 @@ private:
     }
 
     void dibujarTabla() {
-        DrawRectangle(220, 345, 920, 338, panel);
-        DrawRectangleLinesEx({220, 345, 920, 338}, 1, suave);
+        DrawRectangle(220, 345, 920, 280, panel);  // Cambié de 338 a 280 (más pequeña)
+        DrawRectangleLinesEx({220, 345, 920, 280}, 1, suave);
         DrawRectangle(220, 345, 920, 34, suave);
 
         const ConfigTabla& config = tablas[tablaActual];
@@ -964,7 +1143,7 @@ private:
             DrawText(config.campos[i].etiqueta.c_str(), 230 + i * ancho, 355, 13, texto);
         }
 
-        BeginScissorMode(220, 381, 920, 299);
+        BeginScissorMode(220, 381, 920, 244);  // Cambié de 299 a 244
         for (int f = 0; f < (int)filas.size(); f++) {
             int y = 381 + f * 32 - scrollTabla;
             bool seleccionada = !claveSeleccionada.empty() && coincideClave(filas[f], config);
@@ -1007,7 +1186,7 @@ private:
         Boton nuevo("Crear", {220, 292, 115, 38});
         Boton guardar(claveSeleccionada.empty() ? "Guardar" : "Actualizar", {350, 292, 125, 38});
         Boton eliminar("Borrar", {490, 292, 125, 38});
-        Boton salir("Cerrar sesion", {1005, 700, 135, 38});
+        Boton salir("Cerrar sesion", {1035, 292, 135, 38});
         bool crear = puedeCrear();
         bool guardarOk = claveSeleccionada.empty() ? puedeCrear() : puedeActualizar();
         bool borrar = puedeEliminar();

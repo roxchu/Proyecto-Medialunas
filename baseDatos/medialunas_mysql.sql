@@ -12,10 +12,10 @@ CREATE TABLE IF NOT EXISTS variedad (
 CREATE TABLE IF NOT EXISTS insumos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(120) NOT NULL,
-    cantidadActual DECIMAL(12,2),
+    cantidadActual VARCHAR(50),
     unidadMedida VARCHAR(40),
     proveedor VARCHAR(120),
-    stockMinimo DECIMAL(12,2) DEFAULT 0
+    stockMinimo VARCHAR(50) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS vehiculos (
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS receta (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombreProducto VARCHAR(120) NOT NULL,
     insumosNecesarios INT,
-    cantidadEsperada DECIMAL(12,2),
+    cantidadEsperada VARCHAR(50),
     procedimiento TEXT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS lotesProduccion (
     id INT AUTO_INCREMENT PRIMARY KEY,
     fecha DATE,
     idVariedad INT,
-    cantidadProducida DECIMAL(12,2),
+    cantidadProducida VARCHAR(50),
     idEmpleado INT,
     idReceta INT,
     CONSTRAINT fk_lotes_variedad FOREIGN KEY (idVariedad) REFERENCES variedad(id),
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS lotesProduccion (
 CREATE TABLE IF NOT EXISTS stockVenta (
     id INT AUTO_INCREMENT PRIMARY KEY,
     idVariedad INT,
-    stockDisponible DECIMAL(12,2),
+    stockDisponible VARCHAR(50),
     precioUnitario DECIMAL(12,2),
     idLote INT,
     CONSTRAINT fk_stock_variedad FOREIGN KEY (idVariedad) REFERENCES variedad(id),
@@ -104,20 +104,17 @@ CREATE TABLE IF NOT EXISTS hojaRuta (
 CREATE TABLE IF NOT EXISTS loteInsumos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     idLoteProduccion INT,
-    idInsumo INT,
-    cantidad DECIMAL(12,2),
-    unidadMedida VARCHAR(40),
-    observaciones TEXT,
+    idReceta INT,
     costoUnitario DECIMAL(12,2),
-    stockMinimo DECIMAL(12,2) DEFAULT 0,
+    observaciones TEXT,
     CONSTRAINT fk_lote_insumos_lote FOREIGN KEY (idLoteProduccion) REFERENCES lotesProduccion(id),
-    CONSTRAINT fk_lote_insumos_insumo FOREIGN KEY (idInsumo) REFERENCES insumos(id)
+    CONSTRAINT fk_lote_insumos_receta FOREIGN KEY (idReceta) REFERENCES receta(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS recetaInsumos (
     idReceta INT,
     idInsumo INT,
-    cantidad DECIMAL(12,2),
+    cantidad VARCHAR(50),
     PRIMARY KEY (idReceta, idInsumo),
     CONSTRAINT fk_receta_insumos_receta FOREIGN KEY (idReceta) REFERENCES receta(id),
     CONSTRAINT fk_receta_insumos_insumo FOREIGN KEY (idInsumo) REFERENCES insumos(id)
@@ -126,7 +123,7 @@ CREATE TABLE IF NOT EXISTS recetaInsumos (
 CREATE TABLE IF NOT EXISTS detallePedido (
     idPedido INT,
     idVariedad INT,
-    cantidad DECIMAL(12,2),
+    cantidad VARCHAR(50),
     precioUnitario DECIMAL(12,2),
     PRIMARY KEY (idPedido, idVariedad),
     CONSTRAINT fk_detalle_pedido FOREIGN KEY (idPedido) REFERENCES pedidos(id),
