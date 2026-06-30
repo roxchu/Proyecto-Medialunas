@@ -418,7 +418,16 @@ private:
         claveSeleccionada.clear();
         const ConfigTabla& config = tablas[tablaActual];
         for (int i = 0; i < (int)config.campos.size(); i++) {
-            formulario[i].setValor(filas[fila][i]);
+            string valor = filas[fila][i];
+
+            // Convertir fecha yyyy-mm-dd a dd/mm/yyyy para que pase la validación
+            string col = config.campos[i].columna;
+            if ((col == "fecha" || col == "fechaPedido") &&
+                valor.size() == 10 && valor[4] == '-' && valor[7] == '-') {
+                valor = valor.substr(8, 2) + "/" + valor.substr(5, 2) + "/" + valor.substr(0, 4);
+            }
+
+            formulario[i].setValor(valor);
             if (config.campos[i].clave) claveSeleccionada.push_back(filas[fila][i]);
         }
         mensaje = "Registro seleccionado";
@@ -708,6 +717,7 @@ private:
             mensaje = "Error preparando guardado: " + string(sqlite3_errmsg(con.getDB()));
         }
         sqlite3_finalize(stmt);
+        mensaje = "Stock creado. Ir a 'Stock publico' para asignar precio por docena";
         con.cerrar();
     }
 
@@ -846,37 +856,33 @@ private:
     }
 
     void cargarRegistroSeleccionado() {
-    Conexion con("medialunas_pro");
-    if (!con.conectar()) return;
-    const ConfigTabla& config = tablas[tablaActual];
-    string sql = "SELECT * FROM " + config.tabla;
-    if (config.tabla == "stockVenta") sql = "SELECT s.*, v.nombreVariedad as variedad FROM stockVenta s LEFT JOIN variedad v ON s.idVariedad = v.id";
-    sql += " WHERE " + condicionClaves(config);
+        Conexion con("medialunas_pro");
+        if (!con.conectar()) return;
+        const ConfigTabla& config = tablas[tablaActual];
+        string sql = "SELECT * FROM " + config.tabla;
+        if (config.tabla == "stockVenta") sql = "SELECT s.*, v.nombreVariedad as variedad FROM stockVenta s LEFT JOIN variedad v ON s.idVariedad = v.id";
+        sql += " WHERE " + condicionClaves(config);
 
-    sqlite3_stmt* stmt = nullptr;
-    if (sqlite3_prepare_v2(con.getDB(), sql.c_str(), -1, &stmt, NULL) == SQLITE_OK) {
-        if (sqlite3_step(stmt) == SQLITE_ROW) {
-            for (int i = 0; i < (int)config.campos.size(); i++) {
-                string valor;
-                int col = sqlite3_column_index(stmt, config.campos[i].columna.c_str());
-                if (col >= 0 && sqlite3_column_text(stmt, col)) {
-                    valor = (const char*)sqlite3_column_text(stmt, col);
-                    
-                    // NUEVO: Convertir fecha de yyyy-mm-dd a dd/mm/yyyy
-                    if ((config.campos[i].columna == "fecha" || config.campos[i].columna == "fechaPedido") 
-                        && valor.size() == 10 && valor[4] == '-' && valor[7] == '-') {
-                        string anio = valor.substr(0, 4);
-                        string mes = valor.substr(5, 2);
-                        string dia = valor.substr(8, 2);
-                        valor = dia + "/" + mes + "/" + anio;
+        sqlite3_stmt* stmt = nullptr;
+        if (sqlite3_prepare_v2(con.getDB(), sql.c_str(), -1, &stmt, NULL) == SQLITE_OK) {
+            if (sqlite3_step(stmt) == SQLITE_ROW) {
+                for (int i = 0; i < (int)config.campos.size(); i++) {
+                    string valor;
+                    const unsigned char* raw = sqlite3_column_text(stmt, i);
+                    if (raw) {
+                        valor = (const char*)raw;
+                        string col = config.campos[i].columna;
+                        if ((col == "fecha" || col == "fechaPedido") &&
+                            valor.size() == 10 && valor[4] == '-' && valor[7] == '-') {
+                            valor = valor.substr(8, 2) + "/" + valor.substr(5, 2) + "/" + valor.substr(0, 4);
+                        }
                     }
+                    formulario[i].setValor(valor);
                 }
-                formulario[i].setValor(valor);
             }
         }
-    }
-    sqlite3_finalize(stmt);
-    con.cerrar();
+        sqlite3_finalize(stmt);
+        con.cerrar();
     }
 
     string condicionClaves(const ConfigTabla& config) {
