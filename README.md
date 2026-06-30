@@ -50,14 +50,14 @@ La app de escritorio y la web PHP apuntan a la misma base para compartir cliente
 
 ### Configuración de la app C++
 
-Crear `baseDatos/db_config.ini` usando como modelo `baseDatos/db_config.example.ini`:
+Crear `baseDatos/db_config.ini` usando como modelo lo escrito a continuación:
 
 ```ini
-host=127.0.0.1
+host=127.0.0.1 (host local o en servidor)
 puerto=3306
-base=medialunas_pro
-usuario=root
-clave=
+base=nombre_base_datos
+usuario=nombre_usuario
+clave=clave_usuario
 ```
 
 ### Configuración de la web PHP
