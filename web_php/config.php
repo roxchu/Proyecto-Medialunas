@@ -1,10 +1,10 @@
 <?php
 $dbConfig = [
-    'host' => getenv('MEDIALUNAS_DB_HOST') ?: '127.0.0.1',
+    'host' => getenv('MEDIALUNAS_DB_HOST') ?: 'pma.torga.com.ar',
     'port' => getenv('MEDIALUNAS_DB_PORT') ?: '3306',
-    'name' => getenv('MEDIALUNAS_DB_NAME') ?: 'medialunas_pro',
-    'user' => getenv('MEDIALUNAS_DB_USER') ?: 'root',
-    'pass' => getenv('MEDIALUNAS_DB_PASS') ?: '',
+    'name' => getenv('MEDIALUNAS_DB_NAME') ?: 's4_medialunasPro',
+    'user' => getenv('MEDIALUNAS_DB_USER') ?: 'u4_G2Ci7RXpul',
+    'pass' => getenv('MEDIALUNAS_DB_PASS') ?: 'o=1wT!plMiCJofM3fC4jc!=n',
 ];
 
 $localConfig = __DIR__ . '/database.local.php';
